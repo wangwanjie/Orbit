@@ -1,5 +1,23 @@
 [
   {
+    "version": "1.0.1",
+    "build": "2",
+    "pubDate": "Thu, 29 Oct 2026 12:44:46 GMT",
+    "notesHTML": "<h3>新增</h3>\n<ul>\n<li>启动器新增命令帮助页（输入 <code>?</code> 或 <code>help</code>），以及 <code>fi</code>、<code>if</code>、<code>fe</code>、<code>fp</code>、<code>ts</code>、<code>uuid</code>、<code>ip</code> 快捷命令</li>\n<li><code>fp</code> 拷贝访达中选中项目的路径（文件或文件夹，多选时每行一个），未选中时拷贝当前文件夹路径</li>\n</ul>\n<h3>截图与录制</h3>\n<ul>\n<li>窗口截图可以选中访达右键菜单、菜单栏图标弹出的菜单与面板（含控制中心），高亮范围贴合实际可见的菜单</li>\n<li>Orbit 菜单打开时按截图 / 录屏 / GIF 快捷键，菜单会保留在画面中；点击菜单项触发时菜单照常先关闭</li>\n<li>延时截图的倒计时在菜单展开期间继续</li>\n<li>录制期间打开的 Orbit 菜单可以录进画面；录制计时项在倒计时阶段就显示，点击即可取消</li>\n</ul>\n<h3>修复</h3>\n<ul>\n<li>访达右键菜单的图标跟随深色 / 浅色外观，与文字颜色一致</li>\n<li>访达右键菜单弹出缓慢</li>\n<li>macOS 26.7 上启动时主线程卡死，菜单栏图标与控制中心都不出现</li>\n<li>macOS 13–26 上菜单栏布局移动单个项目不生效、全部项目被误判为隐藏</li>\n<li>控制中心打开过的页面常驻内存，内存占用可达 400MB；区域截图结果长期占用整屏画面的内存</li>\n</ul>",
+    "assets": {
+      "arm64": {
+        "name": "Orbit_v1.0.1_2_arm64.dmg",
+        "length": 8098188,
+        "signature": "zXbBCCcDn6JGXde4N3/7snqTwbC3QBF9FxBkYlePcFULjh4dawSA7yMURZbZ0QxXnASlfwGb9EWi7MwkrCQoBQ=="
+      },
+      "x86_64": {
+        "name": "Orbit_v1.0.1_2_x86_64.dmg",
+        "length": 8595170,
+        "signature": "qxQb1MeJ228LJluVT2dfOq6Df4DVZuNYTxVxHtholr3siyFqEV8jlqbX7IE7HWpcjQ6gy+TNqdTPtra0ZiRXDQ=="
+      }
+    }
+  },
+  {
     "version": "1.0.0",
     "build": "1",
     "pubDate": "Thu, 29 Oct 2026 03:10:40 GMT",
