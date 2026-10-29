@@ -1,307 +1,254 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-Hans" class="no-js">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Orbit — 常驻菜单栏的 macOS 效率工具合集</title>
-<meta name="description" content="Orbit 用一个轻量进程替代启动器、窗口管理、剪贴板、菜单栏整理、截图录屏、访达增强、文件查找、应用卸载与垃圾清理等十几款 macOS 软件。">
+<meta name="description" content="Orbit 是常驻菜单栏的 macOS 效率工具合集：用一个轻量进程替代启动器、窗口管理、剪贴板、菜单栏整理、截图录屏、访达增强、文件查找、应用卸载与垃圾清理等十几款软件。">
+<meta name="theme-color" content="#050713">
+<meta name="color-scheme" content="dark light">
+<meta property="og:type" content="website">
 <meta property="og:title" content="Orbit — 常驻菜单栏的 macOS 效率工具合集">
-<meta property="og:description" content="一个菜单栏图标，替代十几款效率软件。支持 Apple 芯片与 Intel，macOS 13 及以上。">
-<meta property="og:image" content="https://wangwanjie.github.io/Orbit/assets/icon.png">
-<link rel="icon" type="image/png" href="assets/icon-256.png">
-<style>
-  :root {
-    --bg: #0d0b1a;
-    --bg-2: #15122b;
-    --card: rgba(255, 255, 255, 0.045);
-    --card-border: rgba(255, 255, 255, 0.08);
-    --text: #f2f0fa;
-    --muted: #a19cbc;
-    --accent: #7b6cff;
-    --accent-2: #4f8dff;
-    --radius: 18px;
-    --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-  }
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    margin: 0;
-    font-family: var(--sans);
-    color: var(--text);
-    background:
-      radial-gradient(1200px 600px at 50% -10%, rgba(123, 108, 255, 0.28), transparent 60%),
-      radial-gradient(800px 500px at 90% 30%, rgba(79, 141, 255, 0.12), transparent 60%),
-      var(--bg);
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
-  a { color: inherit; }
-  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
-
-  nav {
-    position: sticky; top: 0; z-index: 10;
-    backdrop-filter: saturate(180%) blur(18px);
-    -webkit-backdrop-filter: saturate(180%) blur(18px);
-    background: rgba(13, 11, 26, 0.6);
-    border-bottom: 1px solid var(--card-border);
-  }
-  nav .wrap { display: flex; align-items: center; height: 56px; gap: 28px; }
-  nav .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; text-decoration: none; }
-  nav .brand img { width: 26px; height: 26px; }
-  nav .links { margin-left: auto; display: flex; gap: 22px; font-size: 14px; }
-  nav .links a { color: var(--muted); text-decoration: none; }
-  nav .links a:hover { color: var(--text); }
-  nav .lang { cursor: pointer; border: 1px solid var(--card-border); border-radius: 999px; padding: 3px 12px; background: none; color: var(--muted); font: inherit; font-size: 13px; }
-
-  header.hero { text-align: center; padding: 88px 0 40px; }
-  .hero img.icon { width: 148px; height: 148px; filter: drop-shadow(0 24px 48px rgba(123, 108, 255, 0.45)); }
-  .hero h1 { font-size: clamp(40px, 7vw, 68px); letter-spacing: -0.03em; margin: 18px 0 8px; line-height: 1.05; }
-  .hero h1 span {
-    background: linear-gradient(120deg, #c7bfff, #7b6cff 45%, #4f8dff);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-  }
-  .hero p.lead { font-size: clamp(17px, 2.2vw, 21px); color: var(--muted); max-width: 720px; margin: 0 auto; }
-  .downloads { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin: 36px 0 14px; }
-  .btn {
-    display: inline-flex; align-items: center; gap: 10px;
-    padding: 13px 22px; border-radius: 14px; text-decoration: none; font-weight: 600; font-size: 16px;
-    transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
-  }
-  .btn small { display: block; font-weight: 400; font-size: 12px; opacity: .75; }
-  .btn.primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow: 0 10px 30px rgba(123, 108, 255, .35); }
-  .btn.secondary { background: var(--card); border: 1px solid var(--card-border); }
-  .btn:hover { transform: translateY(-2px); }
-  .btn svg { width: 22px; height: 22px; flex: none; }
-  .meta { color: var(--muted); font-size: 13px; }
-  .meta a { color: var(--muted); }
-
-  .shot { margin: 56px auto 0; max-width: 1000px; position: relative; }
-  .shot img { width: 100%; display: block; border-radius: 14px; box-shadow: 0 40px 120px rgba(0, 0, 0, .6), 0 0 0 1px rgba(255, 255, 255, .06); }
-  .tabs { display: flex; justify-content: center; gap: 8px; margin-top: 18px; flex-wrap: wrap; }
-  .tabs button {
-    font: inherit; font-size: 13px; color: var(--muted); background: var(--card); border: 1px solid var(--card-border);
-    border-radius: 999px; padding: 6px 14px; cursor: pointer;
-  }
-  .tabs button.active { color: var(--text); border-color: rgba(123, 108, 255, .7); background: rgba(123, 108, 255, .18); }
-
-  section { padding: 96px 0 0; }
-  section h2 { font-size: clamp(28px, 4vw, 40px); letter-spacing: -0.02em; margin: 0 0 8px; text-align: center; }
-  section p.sub { text-align: center; color: var(--muted); margin: 0 auto 44px; max-width: 640px; }
-
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
-  .card {
-    background: var(--card); border: 1px solid var(--card-border); border-radius: var(--radius);
-    padding: 20px; transition: border-color .15s ease, transform .15s ease;
-  }
-  .card:hover { border-color: rgba(123, 108, 255, .45); transform: translateY(-2px); }
-  .card .tile {
-    width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center;
-    font-size: 19px; color: #fff; margin-bottom: 12px;
-  }
-  .card h3 { margin: 0 0 4px; font-size: 17px; }
-  .card .alt { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
-  .card p { margin: 0; color: var(--muted); font-size: 14px; }
-
-  .points { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
-  .point { padding: 24px; border-radius: var(--radius); background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.015)); border: 1px solid var(--card-border); }
-  .point b { display: block; font-size: 18px; margin-bottom: 6px; }
-  .point span { color: var(--muted); font-size: 14px; }
-
-  .install ol { counter-reset: step; list-style: none; padding: 0; margin: 0 auto; max-width: 720px; }
-  .install li { counter-increment: step; position: relative; padding: 18px 20px 18px 64px; margin-bottom: 10px; background: var(--card); border: 1px solid var(--card-border); border-radius: 14px; }
-  .install li::before {
-    content: counter(step); position: absolute; left: 18px; top: 16px; width: 30px; height: 30px; border-radius: 50%;
-    display: grid; place-items: center; font-weight: 700; background: rgba(123, 108, 255, .22); color: #cfc8ff;
-  }
-  .install li code { background: rgba(255,255,255,.08); border-radius: 6px; padding: 1px 6px; font-size: 13px; }
-
-  footer { margin-top: 110px; padding: 36px 0 48px; border-top: 1px solid var(--card-border); color: var(--muted); font-size: 13px; }
-  footer .wrap { display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; }
-  footer a { color: var(--muted); }
-
-  [data-lang="en"] .zh, [data-lang="zh"] .en { display: none !important; }
-
-  @media (max-width: 640px) {
-    nav .links a.hide-sm { display: none; }
-    header.hero { padding-top: 56px; }
-  }
-</style>
+<meta property="og:description" content="一个进程，十七个模块在轨运行。支持 Apple 芯片与 Intel，需要 macOS 13.0 或更高版本。">
+<meta property="og:image" content="assets/icon-256.png">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/img/favicon-64.png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<script>
+  // 首屏前确定主题，避免闪烁：URL 参数 > localStorage > 跟随系统
+  (function () {
+    var d = document.documentElement, pref = null, q = null;
+    try { q = new URLSearchParams(location.search).get('theme'); } catch (e) {}
+    try { pref = localStorage.getItem('orbit.theme'); } catch (e) {}
+    if (q === 'light' || q === 'dark' || q === 'system') {
+      pref = q;
+    }
+    if (pref !== 'light' && pref !== 'dark') {
+      pref = 'system';
+    }
+    var dark = pref === 'dark' || (pref === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
+    d.setAttribute('data-theme', dark ? 'dark' : 'light');
+    d.setAttribute('data-theme-pref', pref);
+    d.className = 'js';
+    var m = document.querySelector('meta[name="theme-color"]');
+    if (m) {
+      m.setAttribute('content', dark ? '#050713' : '#f2eee4');
+    }
+  })();
+</script>
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/site.js" defer></script>
 </head>
-<body data-lang="zh">
+<body>
+<canvas id="stars" aria-hidden="true"></canvas>
+<a class="skip" href="#main" data-i18n="skip">跳到正文</a>
 
-<nav>
-  <div class="wrap">
-    <a class="brand" href="#"><img src="assets/icon-256.png" alt="">Orbit</a>
-    <div class="links">
-      <a class="hide-sm" href="#features"><span class="zh">功能</span><span class="en">Features</span></a>
-      <a class="hide-sm" href="#install"><span class="zh">安装</span><span class="en">Install</span></a>
-      <a href="https://github.com/wangwanjie/Orbit/releases"><span class="zh">版本历史</span><span class="en">Releases</span></a>
-      <a href="https://github.com/wangwanjie/Orbit">GitHub</a>
-    </div>
-    <button class="lang" id="lang-toggle" type="button">EN</button>
-  </div>
-</nav>
-
-<header class="hero">
-  <div class="wrap">
-    <img class="icon" src="assets/icon.png" alt="Orbit">
-    <h1><span>Orbit</span></h1>
-    <p class="lead">
-      <span class="zh">一个菜单栏图标，替代十几款效率软件。启动器、窗口管理、剪贴板、菜单栏整理、截图录屏、访达增强、文件查找、应用卸载与垃圾清理，都在一个轻量进程里。</span>
-      <span class="en">One menu bar icon instead of a dozen utilities. Launcher, window management, clipboard history, menu bar cleanup, screenshots &amp; recording, Finder extras, file search, app uninstaller and system cleaner — in one lightweight app.</span>
-    </p>
-    <div class="downloads">
-      <a class="btn primary" id="dl-arm" href="https://github.com/wangwanjie/Orbit/releases/latest/download/Orbit-arm64.dmg">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-5-5m5 5 5-5M5 21h14"/></svg>
-        <span><span class="zh">下载 Apple 芯片版</span><span class="en">Download for Apple silicon</span><small>M1 / M2 / M3 / M4 …</small></span>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="./" aria-label="Orbit">
+      <img src="assets/img/icon-64.webp" srcset="assets/img/icon-64.webp 1x, assets/img/icon-128.webp 2x" width="32" height="32" alt="" decoding="async">
+      <span>Orbit</span>
+    </a>
+    <nav class="nav" aria-label="页面导航" data-i18n-attr="aria-label:navLabel">
+      <a href="#modules" data-i18n="navModules">模块</a>
+      <a href="#views" data-i18n="navViews">截图</a>
+      <a href="#download" data-i18n="navDownload">下载</a>
+    </nav>
+    <div class="ctrls">
+      <div class="seg" role="group" aria-label="语言" data-i18n-attr="aria-label:langLabel" id="langSeg">
+        <button type="button" data-lang="zh-Hans" lang="zh-Hans">简</button>
+        <button type="button" data-lang="en" lang="en">EN</button>
+        <button type="button" data-lang="zh-Hant" lang="zh-Hant">繁</button>
+      </div>
+      <div class="seg" role="group" aria-label="主题" data-i18n-attr="aria-label:themeLabel" id="themeSeg">
+        <button type="button" data-theme-btn="light" aria-label="浅色" data-i18n-attr="aria-label:themeLight;title:themeLight" title="浅色">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg>
+        </button>
+        <button type="button" data-theme-btn="dark" aria-label="深色" data-i18n-attr="aria-label:themeDark;title:themeDark" title="深色">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.5 14.5A8 8 0 0 1 9.5 4.5a8 8 0 1 0 10 10z"/></svg>
+        </button>
+        <button type="button" data-theme-btn="system" aria-label="跟随系统" data-i18n-attr="aria-label:themeSystem;title:themeSystem" title="跟随系统">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="12" rx="2"/><path d="M8.5 20h7M12 16.5V20"/></svg>
+        </button>
+      </div>
+      <a class="gh" href="https://github.com/wangwanjie/Orbit" aria-label="GitHub 仓库" data-i18n-attr="aria-label:ghLabel">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
       </a>
-      <a class="btn secondary" id="dl-intel" href="https://github.com/wangwanjie/Orbit/releases/latest/download/Orbit-x86_64.dmg">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0-5-5m5 5 5-5M5 21h14"/></svg>
-        <span><span class="zh">下载 Intel 版</span><span class="en">Download for Intel</span><small>x86_64</small></span>
-      </a>
-    </div>
-    <div class="meta">
-      <span class="zh">免费 · macOS 13.0 及以上 · 已通过 Apple 公证 · 内置自动更新</span>
-      <span class="en">Free · macOS 13.0 or later · Notarized by Apple · Built-in auto update</span>
-      <span id="version"></span>
-    </div>
-
-    <div class="shot">
-      <img id="shot" src="assets/screenshots/launcher.png" alt="Orbit">
-    </div>
-    <div class="tabs" id="tabs">
-      <button type="button" class="active" data-shot="launcher"><span class="zh">启动器</span><span class="en">Launcher</span></button>
-      <button type="button" data-shot="clipboard"><span class="zh">剪贴板</span><span class="en">Clipboard</span></button>
-      <button type="button" data-shot="monitor"><span class="zh">资源监控</span><span class="en">Monitor</span></button>
-      <button type="button" data-shot="cleaner"><span class="zh">垃圾清理</span><span class="en">Cleaner</span></button>
-      <button type="button" data-shot="about"><span class="zh">关于</span><span class="en">About</span></button>
     </div>
   </div>
 </header>
 
-<section>
-  <div class="wrap">
-    <div class="points">
-      <div class="point"><b><span class="zh">按需启用</span><span class="en">Only what you use</span></b><span class="zh">每个功能都是独立模块，停用后不注册快捷键、不运行任何后台任务。</span><span class="en">Every feature is a module. Disabled modules register no shortcuts and run nothing in the background.</span></div>
-      <div class="point"><b><span class="zh">原生且轻量</span><span class="en">Native &amp; light</span></b><span class="zh">纯 AppKit 编写，一个进程取代多款常驻软件，省内存也省菜单栏空间。</span><span class="en">Pure AppKit. One process replaces several resident apps, saving memory and menu bar space.</span></div>
-      <div class="point"><b><span class="zh">安全可追溯</span><span class="en">Safe &amp; traceable</span></b><span class="zh">清理、卸载等操作有风险分级与确认，结果统一记录在“操作记录”中。</span><span class="en">Cleanup and uninstall actions are risk-rated and confirmed, and every result is logged.</span></div>
-      <div class="point"><b><span class="zh">三种语言</span><span class="en">Three languages</span></b><span class="zh">简体中文、繁體中文、English，应用内随时切换，无需重启。</span><span class="en">Simplified Chinese, Traditional Chinese and English, switchable without restarting.</span></div>
+<main id="main">
+  <!-- 首屏：左侧文案与下载，右侧轨道系统 -->
+  <section class="hero wrap">
+    <div class="hero-copy">
+      <p class="eyebrow mono"><span class="dot"></span><span data-i18n="eyebrow">macOS 菜单栏效率工具合集 · 控制中心在线</span></p>
+      <h1 data-i18n="heroTitle">一个进程，<br><em>十七个模块</em>在轨运行</h1>
+      <p class="lead" data-i18n="heroLead">启动器、窗口管理、剪贴板、菜单栏整理、截图录屏、访达增强、文件查找、启动项管理、应用卸载与垃圾清理——全部收进一个常驻菜单栏的轻量进程，每个模块都能单独启停。</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="https://github.com/wangwanjie/Orbit/releases/latest/download/Orbit-arm64.dmg">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10.5l5 5 5-5M5 19.5h14"/></svg>
+          <span data-i18n="dlArm">下载 Apple 芯片版</span>
+        </a>
+        <a class="btn btn-ghost" href="https://github.com/wangwanjie/Orbit/releases/latest/download/Orbit-x86_64.dmg">
+          <span data-i18n="dlIntel">Intel 版</span>
+        </a>
+      </div>
+      <p class="fine mono"><span data-i18n="req">macOS 13.0 及以上 · 已经过 Apple 公证</span> · <a class="ver-link" href="https://github.com/wangwanjie/Orbit/releases/latest"><span data-i18n="verPrefix">最新版本</span> <span class="ver-num">1.0.1</span></a></p>
+      <dl class="stats">
+        <div><dt class="mono">17</dt><dd data-i18n="stat1">功能模块</dd></div>
+        <div><dt class="mono">26</dt><dd data-i18n="stat2">窗口排列动作</dd></div>
+        <div><dt class="mono">120</dt><dd data-i18n="stat3">垃圾清理规则</dd></div>
+        <div><dt class="mono">54</dt><dd data-i18n="stat4">项系统微调</dd></div>
+      </dl>
     </div>
-  </div>
-</section>
 
-<section id="features">
-  <div class="wrap">
-    <h2><span class="zh">18 个模块，一个 App</span><span class="en">18 modules, one app</span></h2>
-    <p class="sub"><span class="zh">所有快捷键都能在“快捷键”页修改，设置可以导出后在另一台 Mac 上一键还原。</span><span class="en">Every shortcut is customizable, and your settings can be exported and restored on another Mac.</span></p>
-    <div class="grid" id="feature-grid"></div>
-  </div>
-</section>
+    <div class="hero-visual">
+      <div class="orbit" id="orbit" role="group" aria-label="Orbit 模块轨道图" data-i18n-attr="aria-label:orbitLabel">
+        <div class="sweep" aria-hidden="true"></div>
+        <svg class="rings" id="rings" viewBox="-500 -500 1000 1000" aria-hidden="true"></svg>
+        <div class="core">
+          <span class="halo" aria-hidden="true"></span>
+          <img src="assets/img/icon-256.webp" srcset="assets/img/icon-128.webp 128w, assets/img/icon-256.webp 256w" sizes="(max-width: 640px) 90px, 140px" width="256" height="256" alt="Orbit 应用图标" data-i18n-attr="alt:iconAlt" decoding="async" fetchpriority="high">
+        </div>
+        <div class="sats" id="sats"></div>
+      </div>
+      <div class="readout" id="readout" aria-live="polite">
+        <div class="ro-bar mono"><span data-i18n="roLabel">遥测 · 当前模块</span><span class="ro-hint" data-i18n="roHint">悬停或点按卫星</span></div>
+        <div class="ro-body">
+          <span class="ro-glyph" id="roGlyph"></span>
+          <div class="ro-text">
+            <p class="ro-cat mono" id="roCat"></p>
+            <h2 class="ro-title" id="roTitle">启动器</h2>
+          </div>
+          <kbd class="ro-key" id="roKey"></kbd>
+        </div>
+        <p class="ro-sum" id="roSum"></p>
+      </div>
+    </div>
+  </section>
 
-<section id="install" class="install">
-  <div class="wrap">
-    <h2><span class="zh">安装</span><span class="en">Install</span></h2>
-    <p class="sub"><span class="zh">不确定芯片类型？打开「苹果菜单 › 关于本机」，看“芯片”或“处理器”一栏。</span><span class="en">Not sure which chip you have? Open  › About This Mac and check “Chip” or “Processor”.</span></p>
-    <ol>
-      <li><span class="zh">下载与本机芯片匹配的 DMG，打开后把 Orbit 拖进「应用程序」文件夹。</span><span class="en">Download the DMG for your chip, open it and drag Orbit into Applications.</span></li>
-      <li><span class="zh">从「应用程序」中打开 Orbit，它会出现在菜单栏，并打开控制中心。</span><span class="en">Launch Orbit from Applications. It appears in the menu bar and opens the Control Center.</span></li>
-      <li><span class="zh">在控制中心的“权限”页按需授予辅助功能、屏幕录制、完全磁盘访问等权限。</span><span class="en">Grant Accessibility, Screen Recording, Full Disk Access and other permissions as needed on the Permissions page.</span></li>
-      <li><span class="zh">访达右键菜单需要在「系统设置 › 通用 › 登录项与扩展 › 访达扩展」中启用 <code>Orbit Finder</code>。</span><span class="en">To use the Finder context menu, enable <code>Orbit Finder</code> in System Settings › General › Login Items &amp; Extensions › Finder.</span></li>
+  <!-- 模块：按轨道（分类）切换的可交互网格 -->
+  <section class="sec wrap" id="modules">
+    <header class="sec-head reveal">
+      <p class="kicker mono" data-i18n="modKicker">01 / 模块舱</p>
+      <h2 data-i18n="modTitle">每颗卫星，都是一款可以单独启停的工具</h2>
+      <p class="sec-lead" data-i18n="modLead">停用的模块不注册快捷键，也不运行任何后台任务。按轨道切换，看看每个模块能做什么。</p>
+    </header>
+    <div class="tabs reveal" role="tablist" id="catTabs" aria-label="模块分类" data-i18n-attr="aria-label:catLabel"></div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <!-- 截图：macOS 窗口框 -->
+  <section class="sec wrap" id="views">
+    <header class="sec-head reveal">
+      <p class="kicker mono" data-i18n="viewKicker">02 / 舱内视图</p>
+      <h2 data-i18n="viewTitle">所有模块，收在同一个控制中心里</h2>
+      <p class="sec-lead" data-i18n="viewLead">侧边栏按效率、截图与录制、文件、系统四组排列；每个模块一页设置，顶部开关随时启停。截图为简体中文界面。</p>
+    </header>
+    <div class="views reveal">
+      <div class="view-tabs" role="tablist" id="viewTabs" aria-label="截图" data-i18n-attr="aria-label:viewLabel">
+        <button type="button" role="tab" data-view="0" aria-selected="true"><span class="mono">A</span><b data-i18n="v1t">启动器</b><small data-i18n="v1d">⌥Space 呼出；拼音搜索、计算器、网页搜索、脚本命令都在这里开关。</small></button>
+        <button type="button" role="tab" data-view="1" aria-selected="false"><span class="mono">B</span><b data-i18n="v2t">剪贴板</b><small data-i18n="v2d">⇧⌘V 打开历史；检查间隔、保留条数与时间、直接粘贴方式。</small></button>
+        <button type="button" role="tab" data-view="2" aria-selected="false"><span class="mono">C</span><b data-i18n="v3t">资源监控</b><small data-i18n="v3d">选择在菜单栏显示哪些指标、用折线图还是数值、多久采样一次。</small></button>
+        <button type="button" role="tab" data-view="3" aria-selected="false"><span class="mono">D</span><b data-i18n="v4t">垃圾清理</b><small data-i18n="v4d">扫描后按风险分级给出推荐选择；缓存直接删除，用户文件移到废纸篓。</small></button>
+      </div>
+      <figure class="window" id="win">
+        <div class="win-stack">
+          <img class="is-on" src="assets/img/launcher-1440.webp" srcset="assets/img/launcher-800.webp 800w, assets/img/launcher-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 760px" width="1440" height="960" alt="Orbit 控制中心的启动器设置页" data-i18n-attr="alt:v1alt" loading="lazy" decoding="async">
+          <img src="assets/img/clipboard-1440.webp" srcset="assets/img/clipboard-800.webp 800w, assets/img/clipboard-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 760px" width="1440" height="960" alt="Orbit 控制中心的剪贴板设置页" data-i18n-attr="alt:v2alt" loading="lazy" decoding="async">
+          <img src="assets/img/monitor-1440.webp" srcset="assets/img/monitor-800.webp 800w, assets/img/monitor-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 760px" width="1440" height="960" alt="Orbit 控制中心的资源监控设置页" data-i18n-attr="alt:v3alt" loading="lazy" decoding="async">
+          <img src="assets/img/cleaner-1440.webp" srcset="assets/img/cleaner-800.webp 800w, assets/img/cleaner-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 760px" width="1440" height="960" alt="Orbit 控制中心的垃圾清理页" data-i18n-attr="alt:v4alt" loading="lazy" decoding="async">
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 守则：全局行为 -->
+  <section class="sec wrap" id="rules">
+    <header class="sec-head reveal">
+      <p class="kicker mono" data-i18n="ruleKicker">03 / 飞行守则</p>
+      <h2 data-i18n="ruleTitle">十几款工具合在一起，规矩只有一套</h2>
+    </header>
+    <ol class="rules">
+      <li class="reveal"><span class="mono">R-01</span><h3 data-i18n="r1t">按需启停</h3><p data-i18n="r1d">停用的模块不注册快捷键，也不运行任何后台任务。</p></li>
+      <li class="reveal"><span class="mono">R-02</span><h3 data-i18n="r2t">快捷键随你改</h3><p data-i18n="r2d">所有快捷键都在控制中心的「快捷键」页统一修改；启动器里的任意命令也能绑定全局快捷键。</p></li>
+      <li class="reveal"><span class="mono">R-03</span><h3 data-i18n="r3t">操作留痕</h3><p data-i18n="r3d">清理、卸载、启动项等破坏性操作的结果，统一记录在「操作记录」页。</p></li>
+      <li class="reveal"><span class="mono">R-04</span><h3 data-i18n="r4t">配置随身带</h3><p data-i18n="r4d">设置可以导出为 <code>.orbitconfig</code> 文件，在另一台 Mac 上双击即可还原。</p></li>
+      <li class="reveal"><span class="mono">R-05</span><h3 data-i18n="r5t">三种语言，三种外观</h3><p data-i18n="r5d">简体中文、繁體中文、English 随时切换，无需重启；外观可选浅色、深色或跟随系统。</p></li>
+      <li class="reveal"><span class="mono">R-06</span><h3 data-i18n="r6t">按芯片自动更新</h3><p data-i18n="r6d">内置 Sparkle 自动更新，默认每天检查一次，只下载与本机芯片匹配的版本。</p></li>
     </ol>
-  </div>
-</section>
+  </section>
 
-<footer>
-  <div class="wrap">
-    <span>© 2026 VanJay · Orbit</span>
-    <span>
-      <a href="https://github.com/wangwanjie/Orbit/releases"><span class="zh">版本历史</span><span class="en">Releases</span></a> ·
-      <a href="https://github.com/wangwanjie/Orbit/issues"><span class="zh">反馈问题</span><span class="en">Feedback</span></a> ·
-      <a href="https://github.com/wangwanjie/Orbit#致谢"><span class="zh">致谢</span><span class="en">Credits</span></a>
-    </span>
+  <!-- 权限 -->
+  <section class="sec wrap" id="perms">
+    <header class="sec-head reveal">
+      <p class="kicker mono" data-i18n="permKicker">04 / 授权清单</p>
+      <h2 data-i18n="permTitle">用到哪个功能，才请求哪项权限</h2>
+      <p class="sec-lead" data-i18n="permLead">首次使用相关功能时 Orbit 会提示授权，也可以在控制中心的「权限」页统一查看。</p>
+    </header>
+    <div class="perms reveal">
+      <div class="perm"><b data-i18n="p1t">辅助功能</b><span data-i18n="p1d">窗口管理、剪贴板直接粘贴、菜单栏图标管理</span></div>
+      <div class="perm"><b data-i18n="p2t">屏幕录制</b><span data-i18n="p2d">截图、GIF 录制、录屏</span></div>
+      <div class="perm"><b data-i18n="p3t">完全磁盘访问</b><span data-i18n="p3d">文件查找、卸载残留扫描、垃圾清理</span></div>
+      <div class="perm"><b data-i18n="p4t">自动化：访达 / 系统事件</b><span data-i18n="p4d">在终端或编辑器中打开、读取访达选中项、登录项管理</span></div>
+      <div class="perm"><b data-i18n="p5t">特权辅助程序（可选）</b><span data-i18n="p5d">以 root 搜索受限目录、删除 root 拥有的文件、管理 LaunchDaemons、执行白名单内的系统维护任务</span></div>
+    </div>
+    <p class="note reveal" data-i18n="permNote">访达右键菜单需要在「系统设置 › 通用 › 登录项与扩展 › 访达扩展」中启用 Orbit Finder，访达增强设置页有直达按钮。</p>
+  </section>
+
+  <!-- 下载 -->
+  <section class="sec wrap" id="download">
+    <div class="launch reveal">
+      <div class="launch-copy">
+        <p class="kicker mono" data-i18n="dlKicker">05 / 发射窗口</p>
+        <h2 data-i18n="dlTitle">选择与你的 Mac 匹配的安装包</h2>
+        <p data-i18n="dlLead">不确定是哪种芯片时，打开「苹果菜单 › 关于本机」，看「芯片」或「处理器」一栏。打开 DMG，把 Orbit 拖进「应用程序」文件夹，再从「应用程序」中打开即可。</p>
+        <p class="fine mono"><span data-i18n="verPrefix2">最新版本</span> <span class="ver-num">1.0.1</span><span class="ver-date"></span> · <a class="ver-notes" href="https://github.com/wangwanjie/Orbit/releases/latest" data-i18n="notes">更新说明</a> · <a href="https://github.com/wangwanjie/Orbit/releases" data-i18n="history">历史版本</a></p>
+      </div>
+      <div class="pads">
+        <a class="pad" href="https://github.com/wangwanjie/Orbit/releases/latest/download/Orbit-arm64.dmg">
+          <span class="pad-tag mono">ARM64</span>
+          <b data-i18n="padArmT">Apple 芯片</b>
+          <span data-i18n="padArmD">M1 及更新的 Mac</span>
+          <span class="pad-file mono">Orbit-arm64.dmg</span>
+        </a>
+        <a class="pad" href="https://github.com/wangwanjie/Orbit/releases/latest/download/Orbit-x86_64.dmg">
+          <span class="pad-tag mono">X86_64</span>
+          <b data-i18n="padIntelT">Intel 芯片</b>
+          <span data-i18n="padIntelD">搭载 Intel 处理器的 Mac</span>
+          <span class="pad-file mono">Orbit-x86_64.dmg</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 常见问题 -->
+  <section class="sec wrap" id="faq">
+    <header class="sec-head reveal">
+      <p class="kicker mono" data-i18n="faqKicker">06 / 常见问题</p>
+    </header>
+    <div class="faq reveal">
+      <details><summary data-i18n="q1">打开时提示「无法验证开发者」？</summary><p data-i18n="a1">安装包已经过 Apple 公证，正常不会出现。如果从其他渠道获得安装包，请到本页重新下载。</p></details>
+      <details><summary data-i18n="q2">授权后功能仍不可用？</summary><p data-i18n="a2">屏幕录制等权限授权后需要重新打开 Orbit。请确认只运行了一份 Orbit，并且它位于「应用程序」文件夹中。</p></details>
+      <details><summary data-i18n="q3">如何卸载 Orbit？</summary><p data-i18n="a3">先在「控制中心 › 权限」中卸载特权辅助程序（如已安装），退出 Orbit 后把它移到废纸篓即可。</p></details>
+    </div>
+    <p class="credits reveal"><span data-i18n="credits">部分实现移植或参考了这些开源项目：</span> <a href="https://github.com/rxhanson/Rectangle">Rectangle</a>、<a href="https://github.com/p0deje/Maccy">Maccy</a>、<a href="https://github.com/Ji4n1ng/OpenInTerminal">OpenInTerminal</a>、<a href="https://github.com/dwarvesf/hidden">Hidden Bar</a>、<a href="https://github.com/jordanbaird/Ice">Ice</a>、<a href="https://github.com/thaw-app/Thaw">Thaw</a>、<a href="https://github.com/wflixu/RClick">RClick</a>、<a href="https://github.com/alienator88/Pearcleaner">Pearcleaner</a>、<a href="https://github.com/harry0703/MangoDisk">MangoDisk</a>、<a href="https://github.com/sparkle-project/Sparkle">Sparkle</a>、<a href="https://github.com/SnapKit/SnapKit">SnapKit</a>、<a href="https://github.com/Tencent/MMKV">MMKV</a>、<a href="https://github.com/groue/GRDB.swift">GRDB</a>。</p>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="foot-brand">
+      <img src="assets/img/icon-64.webp" width="28" height="28" alt="" loading="lazy" decoding="async">
+      <span>Orbit</span>
+    </div>
+    <nav class="foot-links" aria-label="页脚链接" data-i18n-attr="aria-label:footLabel">
+      <a href="https://vanjay.cn" data-i18n="more">VanJay 的更多作品</a>
+      <a href="https://github.com/wangwanjie/Orbit">GitHub</a>
+      <a href="https://github.com/wangwanjie/Orbit/issues" data-i18n="feedback">反馈</a>
+    </nav>
+    <p class="copy mono">© 2026 VanJay</p>
   </div>
 </footer>
-
-<script>
-  // 功能卡片：[图标, 颜色, 中文名, 英文名, 对标, 中文说明, 英文说明]
-  const features = [
-    ["⌕", "#a64bf4", "启动器", "Launcher", "Sol / Alfred", "应用（支持拼音）、系统设置、计算器、网页搜索、脚本命令、翻译与编解码工具，任意命令可绑定快捷键。", "Apps (with pinyin), settings, calculator, web search, script commands, translate & encode tools. Bind any command to a shortcut."],
-    ["▦", "#3b82f6", "窗口管理", "Window Manager", "Rectangle / Magnet", "26 个窗口动作，重复按键循环尺寸，拖到屏幕边缘吸附，跨显示器移动。", "26 window actions, repeat to cycle sizes, snap to screen edges, move across displays."],
-    ["⧉", "#f59e0b", "剪贴板", "Clipboard", "Paste / Maccy", "文本、图片、文件、链接、颜色历史，卡片面板、搜索、收藏夹，直接粘贴或粘贴为纯文本。", "Text, images, files, links and colors. Card panel, search, collections, paste or paste as plain text."],
-    ["☰", "#64748b", "菜单栏", "Menu Bar", "Bartender / Ice", "为每个图标选择显示、隐藏或始终隐藏，悬停或点击展开，支持 macOS 27 原生隐藏。", "Show, hide or always hide each icon; reveal on hover or click; native hiding on macOS 27."],
-    ["◔", "#ef4444", "资源监控", "System Monitor", "iStat Menus / Stats", "菜单栏显示 CPU、内存、网速、磁盘、电池，详情面板含趋势图与进程排行。", "CPU, memory, network, disk and battery in the menu bar, with charts and top processes."],
-    ["⌗", "#ec4899", "截图", "Screenshot", "iShot", "区域、窗口、全屏、延时截图，取色、标注、马赛克、贴图、文字识别。", "Region, window, full screen and timed capture with color picker, annotations, pinning and OCR."],
-    ["◉", "#f97316", "GIF 录制", "GIF Recorder", "LiceCap", "框选区域录制 GIF，帧率与缩放可调。", "Record any region as a GIF with adjustable frame rate and scale."],
-    ["▶", "#e11d48", "录屏", "Screen Recorder", "—", "录制为 MP4 / MOV，包含系统声音与麦克风，可显示鼠标点击。", "Record to MP4 / MOV with system audio, microphone and click highlights."],
-    ["⌘", "#0ea5e9", "访达增强", "Finder Tools", "iRightMouse", "右键在终端或编辑器中打开、拷贝路径、新建文件、剪切粘贴、哈希、压缩、图片转换。", "Open in Terminal or editor, copy path, new file, cut & paste, hash, compress and convert images."],
-    [">_", "#14b8a6", "OpenIn 小程序", "OpenIn Apps", "OpenInTerminal-Lite", "拖到访达工具栏，一键在终端或编辑器中打开当前目录。", "Drop into the Finder toolbar to open the current folder in Terminal or your editor."],
-    ["⌕", "#22c55e", "文件查找", "File Search", "Find Any File", "不建索引的实时搜索，组合条件与内容搜索，列表、树形、网格三种结果视图。", "Index-free live search with combined rules and content search; list, tree and grid views."],
-    ["◕", "#c026d3", "磁盘分析", "Disk Analyzer", "DaisyDisk", "矩形树图与旭日图逐层下钻磁盘占用，查找重复文件。", "Treemap and sunburst views to drill into disk usage; find duplicate files."],
-    ["⏻", "#6366f1", "启动项", "Login Items", "—", "按应用查看登录项、LaunchAgents、LaunchDaemons 与后台项目，启停、删除、清理失效项。", "Login items, LaunchAgents, LaunchDaemons and background items grouped by app."],
-    ["⌫", "#a16207", "应用卸载", "Uninstaller", "AppCleaner", "匹配并清理残留文件，个人数据默认保留，支持批量卸载与孤立残留扫描。", "Finds leftovers by bundle id and developer, keeps personal data by default, batch uninstall."],
-    ["✦", "#06b6d4", "垃圾清理", "Cleaner", "CleanMyMac", "120 条规则，风险分级：缓存、日志、Xcode、开发工具、浏览器、编译产物、大文件等。", "120 risk-rated rules for caches, logs, Xcode, dev tools, browsers, build artifacts, large files…"],
-    ["✋", "#2563eb", "隐私清理", "Privacy", "—", "清理 Safari、Chromium 系、Firefox 的历史、Cookie 与站点数据，以及最近使用项目。", "Clear history, cookies and site data of Safari, Chromium browsers and Firefox, plus recent items."],
-    ["⚒", "#ea580c", "系统维护", "Maintenance", "—", "刷新 DNS、重建 Spotlight 与 LaunchServices、重置缓存、重启访达与音频、释放内存。", "Flush DNS, rebuild Spotlight & LaunchServices, reset caches, restart Finder and audio, purge memory."],
-    ["⚙", "#16a34a", "系统微调", "Tweaks", "—", "54 项访达、程序坞、截屏、键盘等隐藏设置，可恢复默认与撤销。", "54 hidden settings for Finder, Dock, screenshots and keyboard — revertible anytime."]
-  ];
-
-  const grid = document.getElementById("feature-grid");
-  for (const [glyph, color, zh, en, alt, zhText, enText] of features) {
-    const card = document.createElement("div");
-    card.className = "card";
-    card.innerHTML =
-      `<div class="tile" style="background:${color}">${glyph}</div>` +
-      `<h3><span class="zh">${zh}</span><span class="en">${en}</span></h3>` +
-      (alt === "—" ? "" : `<div class="alt"><span class="zh">对标 </span><span class="en">Like </span>${alt}</div>`) +
-      `<p><span class="zh">${zhText}</span><span class="en">${enText}</span></p>`;
-    grid.appendChild(card);
-  }
-
-  // 截图切换
-  const shot = document.getElementById("shot");
-  document.getElementById("tabs").addEventListener("click", (event) => {
-    const button = event.target.closest("button");
-    if (!button) {
-      return;
-    }
-    document.querySelectorAll("#tabs button").forEach((b) => b.classList.toggle("active", b === button));
-    shot.src = `assets/screenshots/${button.dataset.shot}.png`;
-  });
-
-  // 语言：默认跟随浏览器，记住用户的选择
-  const toggle = document.getElementById("lang-toggle");
-  function applyLanguage(lang) {
-    document.body.dataset.lang = lang;
-    document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
-    toggle.textContent = lang === "zh" ? "EN" : "中文";
-    localStorage.setItem("orbit.lang", lang);
-  }
-  const saved = localStorage.getItem("orbit.lang");
-  applyLanguage(saved || (navigator.language.toLowerCase().startsWith("zh") ? "zh" : "en"));
-  toggle.addEventListener("click", () => applyLanguage(document.body.dataset.lang === "zh" ? "en" : "zh"));
-
-  // 尽量识别 Intel Mac（浏览器无法可靠区分时保持 Apple 芯片优先）
-  try {
-    const canvas = document.createElement("canvas");
-    const gl = canvas.getContext("webgl");
-    const info = gl && gl.getExtension("WEBGL_debug_renderer_info");
-    const renderer = info ? gl.getParameter(info.UNMASKED_RENDERER_WEBGL) : "";
-    if (/Intel|AMD|Radeon/i.test(renderer) && !/Apple/i.test(renderer)) {
-      document.getElementById("dl-intel").className = "btn primary";
-      document.getElementById("dl-arm").className = "btn secondary";
-      document.querySelector(".downloads").prepend(document.getElementById("dl-intel"));
-    }
-  } catch (error) {}
-
-  // 显示最新版本号
-  fetch("https://api.github.com/repos/wangwanjie/Orbit/releases/latest")
-    .then((response) => (response.ok ? response.json() : null))
-    .then((release) => {
-      if (release && release.tag_name) {
-        document.getElementById("version").textContent = ` · ${release.tag_name}`;
-      }
-    })
-    .catch(() => {});
-</script>
 </body>
 </html>
