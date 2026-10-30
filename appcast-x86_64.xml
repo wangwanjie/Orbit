@@ -6,6 +6,25 @@
         <description>Orbit 更新</description>
         <language>zh-cn</language>
         <item>
+            <title>Orbit 1.0.2</title>
+            <pubDate>Fri, 30 Oct 2026 01:01:39 GMT</pubDate>
+            <sparkle:version>3</sparkle:version>
+            <sparkle:shortVersionString>1.0.2</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<h3>优化</h3>
+<ul>
+<li>在控制中心按 ⌘Q 只关闭窗口，不退出 Orbit</li>
+</ul>
+<h3>修复</h3>
+<ul>
+<li>macOS 27 上开始录屏即闪退</li>
+<li>启动器帮助页按键符号标签（⌥⌘…、⇧↩ 等）字形挤在一起</li>
+<li>磁盘分析扫描进度浮层文字被挤成省略号</li>
+<li>特权辅助程序无法启动时，应用卸载一直显示“正在扫描残留文件”或卡在“正在卸载”</li>
+</ul>]]></description>
+            <enclosure url="https://github.com/wangwanjie/Orbit/releases/download/v1.0.2/Orbit_v1.0.2_3_x86_64.dmg" length="8575048" type="application/octet-stream" sparkle:edSignature="5AjvvSD0ysyIZ3EDRhwM3Kxz3Jkzzg159NzIvelWYa+SlLxdmfvQDoCXnfL/dpqJ8O+UW0xw6O7ckhDEt1D5BA=="/>
+        </item>
+        <item>
             <title>Orbit 1.0.1</title>
             <pubDate>Thu, 29 Oct 2026 12:44:46 GMT</pubDate>
             <sparkle:version>2</sparkle:version>

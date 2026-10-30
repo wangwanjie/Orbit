@@ -1,5 +1,23 @@
 [
   {
+    "version": "1.0.2",
+    "build": "3",
+    "pubDate": "Fri, 30 Oct 2026 01:01:39 GMT",
+    "notesHTML": "<h3>优化</h3>\n<ul>\n<li>在控制中心按 ⌘Q 只关闭窗口，不退出 Orbit</li>\n</ul>\n<h3>修复</h3>\n<ul>\n<li>macOS 27 上开始录屏即闪退</li>\n<li>启动器帮助页按键符号标签（⌥⌘…、⇧↩ 等）字形挤在一起</li>\n<li>磁盘分析扫描进度浮层文字被挤成省略号</li>\n<li>特权辅助程序无法启动时，应用卸载一直显示“正在扫描残留文件”或卡在“正在卸载”</li>\n</ul>",
+    "assets": {
+      "arm64": {
+        "name": "Orbit_v1.0.2_3_arm64.dmg",
+        "length": 8107238,
+        "signature": "PLbjqQHol9fWGNmvy1Z1eQO13mRrECqJHg3N0kfE5DJw3VV8wa++YRdxLf2uBluDjnhxWQZc/Jy2opIf70+pBQ=="
+      },
+      "x86_64": {
+        "name": "Orbit_v1.0.2_3_x86_64.dmg",
+        "length": 8575048,
+        "signature": "5AjvvSD0ysyIZ3EDRhwM3Kxz3Jkzzg159NzIvelWYa+SlLxdmfvQDoCXnfL/dpqJ8O+UW0xw6O7ckhDEt1D5BA=="
+      }
+    }
+  },
+  {
     "version": "1.0.1",
     "build": "2",
     "pubDate": "Thu, 29 Oct 2026 12:44:46 GMT",
