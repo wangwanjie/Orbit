@@ -1,5 +1,23 @@
 [
   {
+    "version": "1.0.3",
+    "build": "4",
+    "pubDate": "Mon, 02 Nov 2026 15:08:13 GMT",
+    "notesHTML": "<h3>优化</h3>\n<ul>\n<li>在任意 Orbit 窗口（GIF 预览、录屏、文件查找等）按 ⌘Q 只关闭当前窗口，不再退出整个应用；退出 Orbit 请使用菜单栏图标菜单中的“退出 Orbit”</li>\n</ul>\n<h3>修复</h3>\n<ul>\n<li>启动器搜不到 Safari</li>\n<li>应用卸载的系统 App 列表缺少 Safari</li>\n</ul>",
+    "assets": {
+      "arm64": {
+        "name": "Orbit_v1.0.3_4_arm64.dmg",
+        "length": 8107165,
+        "signature": "I5Ru0qlT41bgfkc8yopaoDbA54PVlHz6F/84b7YYhdKBHuD2YpgkDwYYs5HR0EmhKzCd5b5KrBRwoThhVPOYDg=="
+      },
+      "x86_64": {
+        "name": "Orbit_v1.0.3_4_x86_64.dmg",
+        "length": 8574981,
+        "signature": "lLR3l8+h5mvszqmvFXxJVHgXlIdsu8fnwA9WJQqIhBGeSztFFZxhJlMAwuOP3uXDUcSbjPgYzoZ0OgeRqnb6AQ=="
+      }
+    }
+  },
+  {
     "version": "1.0.2",
     "build": "3",
     "pubDate": "Fri, 30 Oct 2026 01:01:39 GMT",
