@@ -29,6 +29,15 @@ Orbit 为 Apple 芯片和 Intel 芯片分别提供安装包，需要 **macOS 13.
 
 安装包已经过 Apple 公证。打开 DMG，把 Orbit 拖进「应用程序」文件夹，再从「应用程序」中打开即可。Orbit 内置自动更新（Sparkle），默认每天检查一次，只会下载与本机芯片匹配的版本；也可以在菜单栏图标的菜单或「控制中心 › 通用 › 更新」中手动检查。
 
+## Windows 版：Orbit-Lite
+
+需要在 **Windows 10/11** 上使用，或想要更轻量的版本？[Orbit-Lite](https://github.com/wangwanjie/Orbit-Lite) 是 Orbit 的轻量跨平台版，同时支持 Windows 与 macOS 13+，保留最常用的五个模块（启动器、剪贴板、窗口管理、截图、系统维护），内置在线更新，可与 Orbit 同时安装：
+
+| 系统 | 下载最新版 |
+| --- | --- |
+| Windows 10 / 11（x64） | [Orbit-Lite-Windows-Setup.exe](https://github.com/wangwanjie/Orbit-Lite/releases/latest/download/Orbit-Lite-Windows-Setup.exe) |
+| macOS 13 或更高（通用） | [Orbit-Lite-macOS.dmg](https://github.com/wangwanjie/Orbit-Lite/releases/latest/download/Orbit-Lite-macOS.dmg) |
+
 ## 功能
 
 每个功能都是可以单独启停的模块：停用的模块不注册快捷键，也不运行任何后台任务。
