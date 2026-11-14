@@ -1,5 +1,23 @@
 [
   {
+    "version": "1.0.4",
+    "build": "5",
+    "pubDate": "Sat, 14 Nov 2026 12:16:54 GMT",
+    "notesHTML": "<h3>新功能</h3>\n<ul>\n<li>新增使用教程向导：首次启动自动打开，也可从菜单栏、App 菜单与通用设置重新打开（含简体、繁体、英文）</li>\n</ul>\n<h3>优化</h3>\n<ul>\n<li>资源监控模块默认关闭</li>\n<li>打包导出的重试次数可用 <code>ORBIT_EXPORT_ATTEMPTS</code> 调整</li>\n</ul>\n<h3>修复</h3>\n<ul>\n<li>菜单栏布局在 macOS 26 上大量项目显示为“系统菜单项”</li>\n<li>菜单栏项目截图兼容 macOS 13</li>\n</ul>",
+    "assets": {
+      "arm64": {
+        "name": "Orbit_v1.0.4_5_arm64.dmg",
+        "length": 8169342,
+        "signature": "wMgp8BjMtH3uj7zQftEj6Vz/bxfFNDQNxkdUd8LOl4aRIaEMqAjCJpi5VbeT/sIwxwqM7PheFKQZxVIIBteZAg=="
+      },
+      "x86_64": {
+        "name": "Orbit_v1.0.4_5_x86_64.dmg",
+        "length": 8627884,
+        "signature": "a+x6ruUsQNQU62Ht+SHsi8OBFi1qsOGHMsGAyM2Vi/53h1OT+lVp1Y78ox6Cli6MH0d0deupTAMe+qeeOrmRDw=="
+      }
+    }
+  },
+  {
     "version": "1.0.3",
     "build": "4",
     "pubDate": "Mon, 02 Nov 2026 15:08:13 GMT",
