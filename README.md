@@ -10,6 +10,7 @@
 
 <p align="center">
   <a href="https://wangwanjie.github.io/Orbit/">主页</a> ·
+  <a href="https://wangwanjie.github.io/Orbit/tutorial.html">使用教程</a> ·
   <a href="https://github.com/wangwanjie/Orbit/releases/latest">下载</a> ·
   <a href="https://github.com/wangwanjie/Orbit/issues">反馈</a>
 </p>

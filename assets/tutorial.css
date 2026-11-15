@@ -1,0 +1,58 @@
+/* 教程页布局 */
+.tut { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 56px; padding-top: 40px; padding-bottom: 72px; align-items: start; }
+.toc { position: sticky; top: 84px; max-height: calc(100vh - 104px); overflow-y: auto; font-size: 14px; padding-right: 4px; }
+.toc h4 { margin: 18px 0 6px; font-size: 12px; font-weight: 600; color: var(--muted); }
+.toc h4:first-child { margin-top: 0; }
+.toc a { display: block; padding: 4px 10px; margin-left: -10px; border-radius: 7px; color: var(--ink-2); }
+.toc a:hover { background: var(--bg-2); text-decoration: none; }
+.toc a.on { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+
+.tut-head { padding-bottom: 28px; border-bottom: 1px solid var(--line); }
+.tut-head h1 { font-size: clamp(28px, 4vw, 40px); font-weight: 700; }
+.tut-head p { margin-top: 12px; color: var(--ink-2); max-width: 40em; }
+.tut-head .fine { color: var(--muted); }
+
+.part-title { margin: 56px 0 4px; font-size: 13px; font-weight: 600; color: var(--muted); }
+.mod { padding: 40px 0 44px; border-bottom: 1px solid var(--line); }
+.mod:last-child { border-bottom: 0; }
+.mod > header h2 { font-size: 26px; font-weight: 700; }
+.mod .tagline { margin-top: 8px; font-size: 17px; color: var(--ink-2); max-width: 40em; }
+.mod .meta { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px 22px; font-size: 13.5px; color: var(--muted); }
+.mod .meta kbd.k { margin-left: 4px; }
+.mod-body { margin-top: 24px; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 32px; align-items: start; }
+.how h3, .gain h3 { font-size: 14px; font-weight: 650; color: var(--muted); margin-bottom: 10px; }
+.how ol { margin: 0; padding: 0; list-style: none; counter-reset: step; }
+.how li { position: relative; padding: 0 0 12px 32px; font-size: 15px; line-height: 1.65; color: var(--ink-2); counter-increment: step; }
+.how li::before {
+  content: counter(step); position: absolute; left: 0; top: 1px; width: 22px; height: 22px; border-radius: 50%;
+  display: grid; place-items: center; font-size: 12px; font-weight: 600; color: var(--accent); background: var(--accent-soft);
+}
+.gain { margin-top: 28px; }
+.ba { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.ba > div { padding: 16px 18px; border-radius: var(--r); border: 1px solid var(--line-2); background: var(--panel); }
+.ba > div span { display: block; margin-bottom: 6px; font-size: 12px; font-weight: 650; color: var(--muted); }
+.ba > div p { font-size: 14.5px; line-height: 1.65; color: var(--ink-2); }
+.ba .after { border-color: color-mix(in srgb, var(--accent) 55%, var(--line-2)); background: var(--accent-soft); }
+.ba .after span { color: var(--accent); }
+.tip { margin-top: 14px; font-size: 14px; color: var(--muted); }
+.tip b { color: var(--ink-2); margin-right: 6px; }
+
+.start-steps { margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.start-steps > div { padding: 16px 18px; border-radius: var(--r); border: 1px solid var(--line-2); background: var(--panel); }
+.start-steps h3, .tip-grid h3 { font-size: 15px; font-weight: 650; }
+.start-steps p, .tip-grid p { margin-top: 4px; font-size: 14.5px; color: var(--muted); line-height: 1.65; }
+.start-steps h3 span { display: inline-grid; place-items: center; width: 22px; height: 22px; margin-right: 8px; border-radius: 50%; font-size: 12px; background: var(--accent-soft); color: var(--accent); }
+.tip-grid { margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 22px 32px; }
+.sect-h { margin-top: 0; font-size: 24px; font-weight: 700; }
+.sect-lead { margin-top: 6px; color: var(--muted); }
+.block { padding: 48px 0 8px; }
+
+@media (max-width: 1000px) {
+  .tut { grid-template-columns: 1fr; gap: 24px; }
+  .toc { position: static; max-height: none; display: flex; flex-wrap: wrap; gap: 4px 6px; padding: 0 0 16px; border-bottom: 1px solid var(--line); }
+  .toc h4 { display: none; }
+  .toc a { margin: 0; padding: 3px 10px; background: var(--bg-2); border-radius: 20px; font-size: 13px; }
+}
+@media (max-width: 800px) {
+  .mod-body, .ba, .start-steps, .tip-grid { grid-template-columns: 1fr; }
+}

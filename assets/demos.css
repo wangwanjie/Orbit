@@ -1,0 +1,418 @@
+/* 教程里的示意动画。
+   约定：不加任何动画时（减少动态效果）元素停在“最终状态”，所以基础样式就是结局画面，
+   keyframes 从 0% 的初始状态演到结局。所有动画共用同一个周期 --T，保证循环对齐。 */
+
+.stage {
+  --T: 10s;
+  position: relative; aspect-ratio: 16 / 10; overflow: hidden;
+  container-type: inline-size;
+  border-radius: 12px; border: 1px solid var(--line-2);
+  user-select: none; -webkit-user-select: none;
+  color: var(--wtext);
+  background: var(--wall);
+}
+[data-theme="light"] .stage {
+  --wall: linear-gradient(135deg, #dce6f6 0%, #ece3f4 58%, #f6e8dc 100%);
+  --glass: rgba(255, 255, 255, .74); --win: #ffffff; --wtext: #1d1d1f; --wmute: #8a8a90;
+  --wline: rgba(0, 0, 0, .09); --acc: #0a64e6; --acc-soft: rgba(10, 100, 230, .13); --dim: rgba(0, 0, 0, .38);
+}
+[data-theme="dark"] .stage {
+  --wall: linear-gradient(135deg, #1b2336 0%, #2a2039 58%, #34261f 100%);
+  --glass: rgba(44, 44, 50, .74); --win: #2a2a2e; --wtext: #f5f5f7; --wmute: #9a9aa2;
+  --wline: rgba(255, 255, 255, .11); --acc: #4d96ff; --acc-soft: rgba(77, 150, 255, .2); --dim: rgba(0, 0, 0, .5);
+}
+.stage *, .stage *::before, .stage *::after { box-sizing: border-box; }
+/* 字号必须写在容器的子元素上：cqw 以最近的祖先容器为基准，容器自己的 font-size 取不到它 */
+.stage .scn { position: absolute; inset: 0; font-size: 2.3cqw; line-height: 1.3; }
+.stage .desk { position: absolute; inset: 1.65em 0 0 0; }
+.stage .abs { position: absolute; }
+
+/* 菜单栏 */
+.stage .mb {
+  position: absolute; inset: 0 0 auto 0; height: 2.1em; z-index: 6;
+  display: flex; align-items: center; gap: .9em; padding: 0 .9em;
+  font-size: .78em; background: var(--glass);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+}
+.stage .mb b { font-weight: 650; }
+.stage .mb .sp { flex: 1; }
+.stage .mb .ic { width: 1.05em; height: 1.05em; border-radius: .3em; background: var(--wmute); opacity: .75; flex: none; }
+.stage .mb .ic.c1 { background: #ff9f0a; opacity: .9; }
+.stage .mb .ic.c2 { background: #30d158; opacity: .9; }
+.stage .mb .ic.c3 { background: #bf5af2; opacity: .9; }
+.stage .mb .ic.c4 { background: #64d2ff; opacity: .9; }
+.stage .mb .ic.orb { border-radius: 50%; background: var(--acc); opacity: 1; }
+
+/* 窗口 */
+.stage .win {
+  position: absolute; background: var(--win); border-radius: .7em; overflow: hidden;
+  box-shadow: 0 .4em 1.6em rgba(0, 0, 0, .22), 0 0 0 1px var(--wline);
+}
+.stage .tb { height: 1.8em; display: flex; align-items: center; gap: .32em; padding: 0 .7em; border-bottom: 1px solid var(--wline); font-size: .78em; color: var(--wmute); }
+.stage .tb i { width: .62em; height: .62em; border-radius: 50%; background: #ff5f57; }
+.stage .tb i:nth-child(2) { background: #febc2e; }
+.stage .tb i:nth-child(3) { background: #28c840; }
+.stage .tb span { margin-left: .6em; }
+.stage .ln { height: .5em; border-radius: .25em; background: var(--wline); margin: .6em .9em; }
+.stage .sk {
+  display: inline-block; min-width: 1.9em; padding: .18em .5em; border-radius: .42em; text-align: center;
+  background: var(--win); box-shadow: 0 .16em 0 var(--wline), 0 0 0 1px var(--wline); font: 600 .85em var(--sans); color: var(--wtext);
+}
+.stage .hint { position: absolute; left: 0; right: 0; bottom: 4%; display: flex; justify-content: center; align-items: center; gap: .35em; font-size: .9em; }
+.stage .hint em { font-style: normal; margin-left: .5em; font-weight: 600; }
+.stage .chip { display: inline-block; padding: .15em .7em; border-radius: 1em; font-size: .78em; background: var(--acc-soft); color: var(--acc); font-weight: 600; }
+.stage .glass { background: var(--glass); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); box-shadow: 0 .5em 2em rgba(0, 0, 0, .25), 0 0 0 1px var(--wline); }
+.stage .muted { color: var(--wmute); }
+
+/* 回放控制 */
+.demo-frame { position: relative; }
+.demo-cap { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 12.5px; color: var(--muted); }
+.replay {
+  font: inherit; font-size: 12.5px; padding: 3px 10px; border-radius: 7px; cursor: pointer;
+  border: 1px solid var(--line-2); background: var(--panel); color: var(--ink-2);
+}
+.replay:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ---------- 通用入场：s1..s5 在周期的不同时刻淡入，结尾统一淡出 ---------- */
+.stage .s1, .stage .s2, .stage .s3, .stage .s4, .stage .s5 {
+  animation-duration: var(--T); animation-iteration-count: infinite; animation-timing-function: cubic-bezier(.2, .8, .2, 1);
+  animation-delay: calc(var(--d, 0s) - var(--T));
+}
+.stage .s1 { animation-name: s1; }
+.stage .s2 { animation-name: s2; }
+.stage .s3 { animation-name: s3; }
+.stage .s4 { animation-name: s4; }
+.stage .s5 { animation-name: s5; }
+@keyframes s1 { 0%, 5% { opacity: 0; transform: var(--from, translateY(.6em)); } 11%, 93% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+@keyframes s2 { 0%, 24% { opacity: 0; transform: var(--from, translateY(.6em)); } 30%, 93% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+@keyframes s3 { 0%, 42% { opacity: 0; transform: var(--from, translateY(.6em)); } 48%, 93% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+@keyframes s4 { 0%, 60% { opacity: 0; transform: var(--from, translateY(.6em)); } 66%, 93% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+@keyframes s5 { 0%, 76% { opacity: 0; transform: var(--from, translateY(.6em)); } 82%, 93% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+
+/* 播放控制：不在视口里时暂停；点“重播”时短暂取消动画再恢复 */
+.stage:not(.run) *, .stage:not(.run) *::before, .stage:not(.run) *::after { animation-play-state: paused !important; }
+.stage.reset *, .stage.reset *::before, .stage.reset *::after { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .stage *, .stage *::before, .stage *::after { animation: none !important; }
+  .stage .fin { opacity: 0 !important; }
+  .replay { display: none; }
+}
+
+/* ============ 启动器 ============ */
+.stage .keys { position: absolute; left: 0; right: 0; top: 44%; display: flex; justify-content: center; gap: .4em; font-size: 1.15em; opacity: 0; animation: l-keys var(--T) infinite; animation-delay: calc(0s - var(--T)); }
+@keyframes l-keys { 0%, 2% { opacity: 0; transform: scale(.9); } 5%, 12% { opacity: 1; transform: scale(1); } 16%, 100% { opacity: 0; } }
+.stage .lp { position: absolute; left: 17%; right: 17%; top: 10%; border-radius: 1em; padding: .8em; animation: l-panel var(--T) infinite; animation-delay: calc(0s - var(--T)); }
+@keyframes l-panel { 0%, 11% { opacity: 0; transform: scale(.95); } 16%, 76% { opacity: 1; transform: none; } 82%, 100% { opacity: 0; transform: scale(.98); } }
+.stage .lbar { display: flex; align-items: center; gap: .6em; height: 2.4em; padding: 0 .4em; font-size: 1.05em; border-bottom: 1px solid var(--wline); position: relative; }
+.stage .lbar .mag { width: .9em; height: .9em; border: .16em solid var(--wmute); border-radius: 50%; position: relative; flex: none; }
+.stage .lbar .mag::after { content: ""; position: absolute; width: .4em; height: .16em; background: var(--wmute); right: -.38em; bottom: -.12em; transform: rotate(45deg); }
+.stage .typed { display: inline-block; overflow: hidden; white-space: nowrap; width: calc(var(--n, 2) * 1ch); animation: l-type var(--T) steps(var(--n, 2), end) infinite; animation-delay: calc(0s - var(--T)); font-weight: 500; }
+@keyframes l-type { 0%, 24% { width: 0; } 38%, 100% { width: calc(var(--n, 2) * 1ch); } }
+.stage .caret { width: .12em; height: 1.1em; margin-left: -.5em; background: var(--acc); animation: caret 1s steps(2) infinite; }
+@keyframes caret { 50% { opacity: 0; } }
+.stage .lbar .ph { position: absolute; left: 2.3em; color: var(--wmute); opacity: 0; animation: l-ph var(--T) infinite; animation-delay: calc(0s - var(--T)); }
+@keyframes l-ph { 0%, 22% { opacity: 1; } 25%, 100% { opacity: 0; } }
+.stage .lres { list-style: none; margin: .5em 0 0; padding: 0; animation: l-res var(--T) infinite; animation-delay: calc(0s - var(--T)); }
+@keyframes l-res { 0%, 38% { opacity: 0; transform: translateY(.4em); } 44%, 100% { opacity: 1; transform: none; } }
+.stage .lres li { display: flex; align-items: center; gap: .6em; padding: .45em .6em; border-radius: .55em; font-size: .95em; }
+.stage .lres li small { margin-left: auto; color: var(--wmute); font-size: .8em; }
+.stage .lres li.sel { background: var(--acc); color: #fff; animation: l-sel var(--T) infinite; animation-delay: calc(0s - var(--T)); }
+.stage .lres li.sel small { color: rgba(255, 255, 255, .8); }
+@keyframes l-sel { 0%, 50% { background: var(--acc-soft); color: var(--wtext); } 56%, 100% { background: var(--acc); color: #fff; } }
+.stage .lres .ai { width: 1.3em; height: 1.3em; border-radius: .38em; flex: none; background: linear-gradient(135deg, #4cd964, #2bb24c); }
+.stage .lres .ai.b { background: linear-gradient(135deg, #8e8e93, #636366); }
+.stage .lres .ai.w { background: linear-gradient(135deg, #5ac8fa, #0a84ff); }
+.stage .lopen { position: absolute; left: 24%; top: 22%; width: 52%; height: 56%; opacity: 0; animation: l-open var(--T) infinite; animation-delay: calc(0s - var(--T)); }
+@keyframes l-open { 0%, 80% { opacity: 0; transform: scale(.9); } 86%, 94% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+.stage .lopen .ctr { display: grid; place-items: center; height: calc(100% - 1.8em); font-size: 1.3em; font-weight: 600; }
+
+/* ============ 窗口管理 ============ */
+.stage .wm-main { left: 0; top: 0; width: 100%; height: 100%; animation: wm var(--T) cubic-bezier(.3, .8, .25, 1) infinite; animation-delay: calc(0s - var(--T)); z-index: 2; }
+@keyframes wm {
+  0%, 8% { left: 20%; top: 16%; width: 60%; height: 66%; }
+  20%, 34% { left: 0; top: 0; width: 50%; height: 100%; }
+  46%, 60% { left: 50%; top: 0; width: 50%; height: 100%; }
+  72%, 90% { left: 0; top: 0; width: 100%; height: 100%; }
+  100% { left: 20%; top: 16%; width: 60%; height: 66%; }
+}
+.stage .wm-other { left: 6%; top: 10%; width: 50%; height: 70%; opacity: .75; }
+.stage .wm-main .body { display: grid; place-items: center; height: calc(100% - 1.8em); }
+.stage .wm-main .blk { width: 46%; aspect-ratio: 4 / 3; border-radius: .6em; background: linear-gradient(135deg, var(--acc), #8e7bff); opacity: .85; }
+.stage .hk { position: absolute; left: 0; right: 0; bottom: 4%; display: flex; justify-content: center; align-items: center; gap: .35em; opacity: 0; z-index: 4; }
+.stage .hk > div { display: flex; align-items: center; gap: .35em; padding: .35em .8em; border-radius: .8em; }
+.stage .hk.h-max { opacity: 1; animation: hk-max var(--T) infinite; animation-delay: calc(0s - var(--T)); }
+.stage .hk.h-ctr { animation: hk-ctr var(--T) infinite; animation-delay: calc(0s - var(--T)); }
+.stage .hk.h-l { animation: hk-l var(--T) infinite; animation-delay: calc(0s - var(--T)); }
+.stage .hk.h-r { animation: hk-r var(--T) infinite; animation-delay: calc(0s - var(--T)); }
+@keyframes hk-ctr { 0%, 3% { opacity: 0; } 5%, 14% { opacity: 1; } 18%, 100% { opacity: 0; } }
+@keyframes hk-l { 0%, 15% { opacity: 0; } 18%, 38% { opacity: 1; } 42%, 100% { opacity: 0; } }
+@keyframes hk-r { 0%, 39% { opacity: 0; } 42%, 62% { opacity: 1; } 66%, 100% { opacity: 0; } }
+@keyframes hk-max { 0%, 63% { opacity: 0; } 66%, 92% { opacity: 1; } 96%, 100% { opacity: 0; } }
+
+/* ============ 剪贴板 ============ */
+.stage .cb-doc { left: 16%; top: 8%; width: 68%; height: 52%; }
+.stage .cb-doc .ln.pasted { margin: .6em .9em; height: auto; background: none; font-size: .9em; color: var(--acc); font-weight: 500; animation: cb-paste var(--T) infinite; animation-delay: calc(0s - var(--T)); }
+@keyframes cb-paste { 0%, 74% { opacity: 0; } 80%, 93% { opacity: 1; } 100% { opacity: 0; } }
+.stage .cb-panel { left: 0; right: 0; bottom: 0; height: 46%; border-radius: 1em 1em 0 0; padding: .8em 3% 0; animation: cb-slide var(--T) cubic-bezier(.2, .8, .2, 1) infinite; animation-delay: calc(0s - var(--T)); z-index: 3; }
+@keyframes cb-slide { 0%, 6% { transform: translateY(105%); } 16%, 74% { transform: none; } 84%, 100% { transform: translateY(105%); } }
+.stage .cb-search { height: 1.9em; width: 46%; margin: 0 auto .7em; border-radius: .6em; background: var(--wline); display: flex; align-items: center; padding: 0 .8em; font-size: .85em; color: var(--wmute); }
+.stage .cards { position: absolute; left: 3%; right: 3%; top: 3.4em; bottom: 6%; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2%; }
+.stage .card { background: var(--win); border-radius: .7em; padding: .6em .7em; box-shadow: 0 0 0 1px var(--wline); overflow: hidden; font-size: .88em; display: flex; flex-direction: column; gap: .4em; }
+.stage .card small { color: var(--wmute); font-size: .8em; }
+.stage .card .sw { flex: 1; border-radius: .4em; background: #4f7cff; }
+.stage .card .im { flex: 1; border-radius: .4em; background: linear-gradient(135deg, #ffb36b, #ff6b81); }
+.stage .cb-sel { position: absolute; top: 0; bottom: 0; width: 23.5%; left: 25.5%; border: .2em solid var(--acc); border-radius: .8em; pointer-events: none; animation: cb-sel var(--T) cubic-bezier(.3, .8, .3, 1) infinite; animation-delay: calc(0s - var(--T)); }
+@keyframes cb-sel { 0%, 22% { opacity: 0; left: 0; } 26% { opacity: 1; left: 0; } 40%, 74% { opacity: 1; left: 25.5%; } 84%, 100% { opacity: 0; left: 25.5%; } }
+
+/* ============ 菜单栏 ============ */
+.stage .mbd { position: absolute; inset: 0; }
+.stage .mbd .hid { display: flex; gap: .9em; overflow: hidden; max-width: 8em; animation: mb-hide var(--T) cubic-bezier(.3, .8, .25, 1) infinite; animation-delay: calc(0s - var(--T)); }
+@keyframes mb-hide { 0%, 12% { max-width: 8em; opacity: 1; } 24%, 56% { max-width: 0; opacity: 0; } 68%, 100% { max-width: 8em; opacity: 1; } }
+.stage .mbd .chev { font-weight: 700; display: inline-block; animation: mb-chev var(--T) infinite; animation-delay: calc(0s - var(--T)); }
+@keyframes mb-chev { 0%, 12% { transform: rotate(0); } 24%, 56% { transform: rotate(180deg); } 68%, 100% { transform: rotate(0); } }
+.stage .mbd .cap { position: absolute; left: 0; right: 0; top: 30%; text-align: center; font-size: 1.2em; font-weight: 600; opacity: 0; }
+.stage .mbd .cap.c-hide { animation: mb-cap1 var(--T) infinite; animation-delay: calc(0s - var(--T)); }
+.stage .mbd .cap.c-show { opacity: 1; animation: mb-cap2 var(--T) infinite; animation-delay: calc(0s - var(--T)); }
+@keyframes mb-cap1 { 0%, 22% { opacity: 0; } 28%, 54% { opacity: 1; } 60%, 100% { opacity: 0; } }
+@keyframes mb-cap2 { 0%, 4% { opacity: 1; } 10%, 66% { opacity: 0; } 72%, 94% { opacity: 1; } 100% { opacity: 0; } }
+.stage .mbd .mb-panel { right: 4%; top: 2.2em; padding: .6em .8em; border-radius: .8em; display: flex; gap: .7em; align-items: center; font-size: .85em; opacity: 0; animation: mb-pan var(--T) infinite; animation-delay: calc(0s - var(--T)); }
+@keyframes mb-pan { 0%, 30% { opacity: 0; transform: translateY(-.4em); } 36%, 52% { opacity: 1; transform: none; } 58%, 100% { opacity: 0; } }
+.stage .mbd .mb-panel .ic { width: 1.4em; height: 1.4em; border-radius: .4em; flex: none; }
+.stage .mb-panel .ic.c1 { background: #ff9f0a; }
+.stage .mb-panel .ic.c3 { background: #bf5af2; }
+.stage .mb-panel .ic.c4 { background: #64d2ff; }
+.stage .mbd .stub { top: 40%; left: 22%; width: 56%; height: 38%; }
+
+/* ============ 资源监控 ============ */
+.stage .eq { display: inline-flex; align-items: flex-end; gap: .14em; height: 1.05em; }
+.stage .eq i { width: .17em; background: var(--acc); border-radius: .1em; transform-origin: bottom; animation: eq 1.3s ease-in-out infinite; }
+.stage .eq i:nth-child(1) { height: 60%; animation-delay: -.2s; }
+.stage .eq i:nth-child(2) { height: 100%; animation-delay: -.7s; }
+.stage .eq i:nth-child(3) { height: 45%; animation-delay: -.4s; }
+.stage .eq i:nth-child(4) { height: 85%; animation-delay: -1s; }
+.stage .eq i:nth-child(5) { height: 55%; animation-delay: -.1s; }
+@keyframes eq { 0%, 100% { transform: scaleY(.4); } 50% { transform: scaleY(1); } }
+.stage .mo-panel { right: 12%; top: 2%; width: 50%; padding: .9em 1em; border-radius: .9em; }
+.stage .mo-panel h5 { margin: 0 0 .4em; font-size: .85em; font-weight: 600; color: var(--wmute); }
+.stage .mo-panel svg { width: 100%; height: auto; display: block; }
+.stage .mo-panel .tr { fill: none; stroke: var(--acc); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 0; animation: mo-draw var(--T) ease-out infinite; animation-delay: calc(0s - var(--T)); }
+@keyframes mo-draw { 0%, 12% { stroke-dashoffset: 1; } 40%, 100% { stroke-dashoffset: 0; } }
+.stage .mo-panel .ar { fill: var(--acc-soft); stroke: none; animation: mo-fill var(--T) infinite; animation-delay: calc(0s - var(--T)); }
+@keyframes mo-fill { 0%, 30% { opacity: 0; } 42%, 100% { opacity: 1; } }
+.stage .proc { display: grid; grid-template-columns: 5em 1fr 2.6em; gap: .6em; align-items: center; font-size: .85em; margin-top: .45em; }
+.stage .proc .bar { height: .5em; border-radius: .25em; background: var(--wline); overflow: hidden; }
+.stage .proc .bar i { display: block; height: 100%; width: var(--w); background: var(--acc); border-radius: .25em; transform-origin: left; animation: mo-bar var(--T) cubic-bezier(.2, .8, .2, 1) infinite; animation-delay: calc(var(--d, 0s) - var(--T)); }
+@keyframes mo-bar { 0%, 30% { transform: scaleX(0); } 48%, 100% { transform: scaleX(1); } }
+.stage .proc span:last-child { text-align: right; color: var(--wmute); }
+
+/* ============ 截图 ============ */
+.stage .ss-bg { left: 8%; top: 6%; width: 84%; height: 86%; }
+.stage .ss-bg .chart { display: flex; align-items: flex-end; gap: 4%; height: 52%; margin: .8em 1.2em .4em; }
+.stage .ss-bg .chart i { flex: 1; background: var(--acc); opacity: .75; border-radius: .3em .3em 0 0; }
+.stage .ss-bg .note { margin: 0 1.2em; font-size: .9em; }
+.stage .sel { position: absolute; left: 22%; top: 20%; width: 56%; height: 56%; border: .14em dashed var(--acc); box-shadow: 0 0 0 200cqw var(--dim); animation: ss-sel var(--T) cubic-bezier(.2, .8, .2, 1) infinite; animation-delay: calc(0s - var(--T)); z-index: 3; }
+@keyframes ss-sel { 0%, 6% { left: 28%; top: 26%; width: 0; height: 0; opacity: 0; } 8% { opacity: 1; } 26%, 90% { left: 22%; top: 20%; width: 56%; height: 56%; opacity: 1; } 97%, 100% { left: 22%; top: 20%; width: 56%; height: 56%; opacity: 0; } }
+.stage .sel .size { position: absolute; left: -.14em; top: -1.9em; padding: .12em .6em; border-radius: .4em; background: var(--acc); color: #fff; font-size: .78em; white-space: nowrap; }
+.stage .sel .tools { position: absolute; right: -.14em; top: calc(100% + .5em); display: flex; gap: .3em; padding: .3em .45em; border-radius: .7em; font-size: .95em; }
+.stage .sel .tools span { width: 1.6em; height: 1.6em; display: grid; place-items: center; border-radius: .4em; color: var(--wtext); }
+.stage .sel .tools span.on { background: var(--acc); color: #fff; }
+.stage .sel svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.stage .sel .arrow { fill: none; stroke: #ff453a; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; animation: ss-arrow var(--T) ease-out infinite; animation-delay: calc(0s - var(--T)); }
+@keyframes ss-arrow { 0%, 50% { stroke-dashoffset: 1; } 62%, 100% { stroke-dashoffset: 0; } }
+.stage .sel .box { fill: none; stroke: #ff453a; stroke-width: 2.5; stroke-dasharray: 1; animation: ss-box var(--T) ease-out infinite; animation-delay: calc(0s - var(--T)); }
+@keyframes ss-box { 0%, 62% { stroke-dashoffset: 1; } 74%, 100% { stroke-dashoffset: 0; } }
+.stage .toast { left: 0; right: 0; margin: 0 auto; width: fit-content; bottom: 5%; padding: .35em 1em; border-radius: 2em; font-size: .9em; font-weight: 600; z-index: 4; }
+
+/* ============ GIF 录制 ============ */
+.stage .reg { left: 18%; top: 14%; width: 64%; height: 66%; border: .16em dashed var(--acc); animation: gif-reg var(--T) cubic-bezier(.2, .8, .2, 1) infinite; animation-delay: calc(0s - var(--T)); }
+@keyframes gif-reg { 0%, 3% { opacity: 0; transform: scale(.7); } 12%, 92% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+.stage .reg::before, .stage .reg::after { content: ""; position: absolute; width: .7em; height: .7em; background: var(--acc); border-radius: 50%; }
+.stage .reg::before { left: -.45em; top: -.45em; }
+.stage .reg::after { right: -.45em; bottom: -.45em; }
+.stage .reg .inner { position: absolute; inset: 0; overflow: hidden; background: var(--win); }
+.stage .ball { position: absolute; left: 12%; bottom: 14%; width: 3em; height: 3em; border-radius: 50%; background: linear-gradient(135deg, #ff9f0a, #ff453a); animation: gif-ball 1.8s ease-in-out infinite; }
+@keyframes gif-ball { 0%, 100% { transform: translate(0, 0); } 25% { transform: translate(14em, -8em); } 50% { transform: translate(28em, 0); } 75% { transform: translate(14em, -8em); } }
+.stage .recchip { position: absolute; left: -.16em; top: -2.2em; display: flex; align-items: center; gap: .5em; padding: .2em .7em; border-radius: .5em; font-size: .8em; background: var(--glass); box-shadow: 0 0 0 1px var(--wline); opacity: 0; animation: gif-chip var(--T) infinite; animation-delay: calc(0s - var(--T)); }
+@keyframes gif-chip { 0%, 10% { opacity: 0; } 14%, 74% { opacity: 1; } 78%, 100% { opacity: 0; } }
+.stage .rd { width: .7em; height: .7em; border-radius: 50%; background: #ff453a; animation: rd 1s steps(2) infinite; }
+@keyframes rd { 50% { opacity: .25; } }
+.stage .timer { height: 1.3em; overflow: hidden; font-variant-numeric: tabular-nums; }
+.stage .timer div { animation: tick var(--T) steps(5, end) infinite; animation-delay: calc(0s - var(--T)); transform: translateY(-6.5em); }
+.stage .timer span { display: block; height: 1.3em; line-height: 1.3em; }
+@keyframes tick { 0%, 14% { transform: translateY(0); } 74%, 100% { transform: translateY(-6.5em); } }
+.stage .gif-saved { left: 0; right: 0; margin: 0 auto; width: fit-content; bottom: 7%; padding: .4em 1.1em; border-radius: 2em; font-weight: 600; font-size: .95em; z-index: 4; }
+
+/* ============ 录屏 ============ */
+.stage .rc-win { left: 10%; top: 8%; width: 80%; height: 66%; }
+.stage .rc-win .ln:nth-child(3) { width: 70%; }
+.stage .cur { position: absolute; width: 1.1em; height: 1.1em; z-index: 5; background: var(--wtext); clip-path: polygon(0 0, 0 100%, 28% 76%, 48% 100%, 62% 92%, 42% 68%, 78% 66%); left: 62%; top: 44%; animation: rc-cur var(--T) cubic-bezier(.4, 0, .2, 1) infinite; animation-delay: calc(0s - var(--T)); }
+@keyframes rc-cur { 0%, 10% { left: 24%; top: 62%; } 30%, 50% { left: 62%; top: 44%; } 66%, 100% { left: 40%; top: 30%; } }
+.stage .ring { position: absolute; width: 2.6em; height: 2.6em; margin: -1.3em 0 0 -1.3em; border-radius: 50%; border: .2em solid #ff453a; opacity: 0; z-index: 4; animation: rc-ring var(--T) ease-out infinite; animation-delay: calc(0s - var(--T)); }
+.stage .ring.r1 { left: 62.6%; top: 44.6%; }
+.stage .ring.r2 { left: 40.6%; top: 30.6%; animation-name: rc-ring2; }
+@keyframes rc-ring { 0%, 31% { opacity: 0; transform: scale(.3); } 33% { opacity: 1; } 42%, 100% { opacity: 0; transform: scale(1.4); } }
+@keyframes rc-ring2 { 0%, 67% { opacity: 0; transform: scale(.3); } 69% { opacity: 1; } 78%, 100% { opacity: 0; transform: scale(1.4); } }
+.stage .pill { left: 50%; bottom: 5%; transform: translateX(-50%); display: flex; align-items: center; gap: .9em; padding: .5em 1em; border-radius: 2em; font-size: .85em; white-space: nowrap; z-index: 6; }
+.stage .meter { display: flex; align-items: center; gap: .4em; color: var(--wmute); }
+.stage .meter .mt { display: inline-flex; align-items: center; gap: .12em; height: 1em; }
+.stage .meter .mt i { width: .17em; height: 100%; background: #30d158; border-radius: .1em; animation: eq 1s ease-in-out infinite; transform-origin: center; }
+.stage .meter .mt i:nth-child(2) { animation-delay: -.3s; }
+.stage .meter .mt i:nth-child(3) { animation-delay: -.6s; }
+.stage .meter .mt i:nth-child(4) { animation-delay: -.2s; }
+.stage .meter.m2 .mt i { animation-duration: 1.4s; background: #64d2ff; }
+.stage .pill .stop { padding: .1em .7em; border-radius: 1em; background: #ff453a; color: #fff; font-weight: 600; }
+
+/* ============ 访达增强 ============ */
+.stage .fd-win { left: 8%; top: 6%; width: 52%; height: 74%; }
+.stage .fd-row { display: flex; align-items: center; gap: .6em; padding: .55em .9em; font-size: .92em; }
+.stage .fd-row .fi { width: 1.4em; height: 1.1em; border-radius: .25em; background: #5ac8fa; }
+.stage .fd-row .fi.d { background: #8e8e93; width: 1em; height: 1.3em; }
+.stage .ctx { left: 34%; top: 26%; width: 34%; padding: .35em; border-radius: .7em; font-size: .88em; animation: fd-ctx var(--T) infinite; animation-delay: calc(0s - var(--T)); z-index: 4; }
+@keyframes fd-ctx { 0%, 12% { opacity: 0; transform: scale(.95); } 18%, 52% { opacity: 1; transform: none; } 58%, 100% { opacity: 0; } }
+.stage .ctx div { padding: .32em .7em; border-radius: .4em; display: flex; justify-content: space-between; }
+.stage .ctx div.hl { background: var(--acc); color: #fff; animation: fd-hl var(--T) infinite; animation-delay: calc(0s - var(--T)); }
+@keyframes fd-hl { 0%, 34% { background: transparent; color: var(--wtext); } 38%, 100% { background: var(--acc); color: #fff; } }
+.stage .ctx hr { border: 0; border-top: 1px solid var(--wline); margin: .25em 0; }
+.stage .term { left: 46%; top: 44%; width: 48%; height: 46%; background: #1c1c1e; color: #e5e5ea; font-family: var(--mono); animation: fd-term var(--T) infinite; animation-delay: calc(0s - var(--T)); z-index: 5; }
+@keyframes fd-term { 0%, 56% { opacity: 0; transform: translateY(.8em) scale(.97); } 64%, 93% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+.stage .term .tb { border-bottom-color: rgba(255, 255, 255, .1); color: #98989f; }
+.stage .term p { margin: .8em .9em 0; font-size: .85em; }
+.stage .term p b { color: #30d158; font-weight: 500; }
+.stage .term .caret { display: inline-block; width: .5em; height: 1em; background: #e5e5ea; margin: 0 0 -.15em .2em; }
+
+/* ============ 文件查找 ============ */
+.stage .fs-win { left: 12%; top: 7%; width: 76%; height: 84%; }
+.stage .fs-top { display: flex; align-items: center; gap: .7em; padding: .7em .9em .4em; }
+.stage .fs-input { flex: 1; height: 2em; border-radius: .55em; background: var(--wline); display: flex; align-items: center; padding: 0 .8em; font-weight: 500; }
+.stage .fs-input .typed { animation-name: fs-type; }
+@keyframes fs-type { 0%, 6% { width: 0; } 20%, 100% { width: calc(var(--n, 2) * 1ch); } }
+.stage .fs-chips { display: flex; gap: .5em; padding: 0 .9em .5em; }
+.stage .prog { height: .22em; margin: 0 .9em .4em; background: var(--wline); border-radius: .15em; overflow: hidden; }
+.stage .prog i { display: block; height: 100%; background: var(--acc); transform-origin: left; animation: fs-prog var(--T) linear infinite; animation-delay: calc(0s - var(--T)); }
+@keyframes fs-prog { 0%, 22% { transform: scaleX(0); opacity: 1; } 70% { transform: scaleX(1); opacity: 1; } 76%, 100% { transform: scaleX(1); opacity: .25; } }
+.stage .fs-res { padding: 0 .4em; }
+.stage .fs-res .it { display: flex; align-items: center; gap: .7em; padding: .5em .6em; border-radius: .5em; font-size: .92em; }
+.stage .fs-res .it:first-child { background: var(--acc-soft); }
+.stage .fs-res .fi { width: 1.1em; height: 1.4em; border-radius: .2em; background: var(--wmute); opacity: .55; }
+
+/* ============ 磁盘分析 ============ */
+.stage .dk-win { left: 10%; top: 7%; width: 80%; height: 84%; }
+.stage .tm { position: absolute; left: .7em; right: .7em; top: 2.5em; bottom: .7em; }
+.stage .tm .b { position: absolute; border-radius: .5em; padding: .5em .7em; font-size: .85em; color: #fff; font-weight: 600; box-shadow: inset 0 0 0 .12em rgba(255, 255, 255, .25); overflow: hidden; }
+.stage .tm .b0 { left: 0; top: 0; width: 58.5%; height: 62%; background: #5e5ce6; --from: scale(.9); }
+.stage .tm .b1 { left: 59.5%; top: 0; width: 40.5%; height: 38%; background: #bf5af2; --from: scale(.9); }
+.stage .tm .b2 { left: 59.5%; top: 39%; width: 40.5%; height: 23%; background: #ff9f0a; --from: scale(.9); }
+.stage .tm .b3 { left: 0; top: 63%; width: 36%; height: 37%; background: #30b0c7; --from: scale(.9); }
+.stage .tm .b4 { left: 37%; top: 63%; width: 28%; height: 37%; background: #34c759; --from: scale(.9); }
+.stage .tm .b5 { left: 66%; top: 63%; width: 34%; height: 37%; background: #ff6482; --from: scale(.9); }
+.stage .tm .b0::after { content: ""; position: absolute; inset: 0; border: .22em solid #fff; border-radius: .5em; animation: dk-hl var(--T) infinite; animation-delay: calc(0s - var(--T)); }
+@keyframes dk-hl { 0%, 58% { opacity: 0; } 64%, 100% { opacity: 1; } }
+.stage .dk-win .crumb { padding: .5em .9em; font-size: .8em; color: var(--wmute); }
+
+/* ============ 启动项 ============ */
+.stage .lg-win { left: 12%; top: 8%; width: 76%; height: 82%; }
+.stage .lg-top { display: flex; justify-content: flex-end; padding: .5em .9em 0; min-height: 2.2em; }
+.stage .lg-row { display: flex; align-items: center; gap: .8em; padding: .6em 1em; border-top: 1px solid var(--wline); font-size: .95em; }
+.stage .lg-row .ai { width: 1.7em; height: 1.7em; border-radius: .45em; flex: none; }
+.stage .lg-row .nm { flex: 1; }
+.stage .tg { width: 2.4em; height: 1.4em; border-radius: 1em; background: var(--acc); position: relative; flex: none; }
+.stage .tg::after { content: ""; position: absolute; top: .15em; left: 1.15em; width: 1.1em; height: 1.1em; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0, 0, 0, .3); }
+.stage .tg.off { background: var(--wline); box-shadow: inset 0 0 0 1px var(--wline); }
+.stage .tg.off::after { left: .15em; }
+.stage .tg.flip { animation: lg-bg var(--T) infinite; animation-delay: calc(var(--d, 0s) - var(--T)); }
+.stage .tg.flip::after { animation: lg-knob var(--T) cubic-bezier(.3, .8, .3, 1) infinite; animation-delay: calc(var(--d, 0s) - var(--T)); }
+.stage .lg-row.fade .nm { animation: lg-name var(--T) infinite; animation-delay: calc(var(--d, 0s) - var(--T)); }
+@keyframes lg-bg { 0%, 30% { background: var(--acc); box-shadow: none; } 33%, 100% { background: var(--wline); box-shadow: inset 0 0 0 1px var(--wline); } }
+@keyframes lg-knob { 0%, 30% { left: 1.15em; } 36%, 100% { left: .15em; } }
+@keyframes lg-name { 0%, 30% { opacity: 1; } 36%, 100% { opacity: .45; } }
+.stage .lg-row.fade .nm { opacity: .45; }
+
+/* ============ 应用卸载 ============ */
+.stage .un-win { left: 12%; top: 7%; width: 76%; height: 86%; }
+.stage .un-head { display: flex; align-items: center; gap: .8em; padding: .7em .9em; }
+.stage .un-drop { flex: 1; height: 3em; border-radius: .7em; border: .14em dashed var(--acc); display: flex; align-items: center; justify-content: center; font-size: .85em; color: var(--acc); background: var(--acc-soft); animation: un-drop var(--T) infinite; animation-delay: calc(0s - var(--T)); }
+@keyframes un-drop { 0%, 6% { background: transparent; } 14%, 24% { background: var(--acc-soft); } 28%, 100% { background: transparent; border-color: var(--wline); color: var(--wmute); } }
+.stage .app-ic { width: 3em; height: 3em; border-radius: .8em; background: linear-gradient(135deg, #ff9f0a, #ff453a); flex: none; }
+.stage .un-drag { position: absolute; z-index: 5; right: 6%; top: -4%; animation: un-drag var(--T) cubic-bezier(.3, .8, .3, 1) infinite; animation-delay: calc(0s - var(--T)); opacity: 0; width: 3em; height: 3em; border-radius: .8em; background: linear-gradient(135deg, #ff9f0a, #ff453a); box-shadow: 0 .4em 1em rgba(0, 0, 0, .3); }
+@keyframes un-drag { 0%, 2% { opacity: 0; transform: translate(0, 0) scale(1.1); } 4% { opacity: 1; transform: translate(0, 0) scale(1.1); } 18% { opacity: 1; transform: translate(-15em, 5em) scale(1); } 22%, 100% { opacity: 0; transform: translate(-15em, 5em) scale(.8); } }
+.stage .un-row { padding: 0 .9em; }
+.stage .un-row-in { display: flex; align-items: center; gap: .7em; padding: .38em 0; border-top: 1px solid var(--wline); font-size: .88em; animation: un-out var(--T) cubic-bezier(.4, 0, 1, 1) infinite; animation-delay: calc(var(--o, 0s) - var(--T)); }
+@keyframes un-out { 0%, 62% { opacity: 1; transform: none; } 70%, 100% { opacity: 0; transform: translateX(2.5em); } }
+.stage .cbx { width: 1.1em; height: 1.1em; border-radius: .28em; background: var(--acc); flex: none; position: relative; }
+.stage .cbx::after { content: ""; position: absolute; left: .32em; top: .12em; width: .28em; height: .55em; border: solid #fff; border-width: 0 .16em .16em 0; transform: rotate(45deg); }
+.stage .cbx.no { background: transparent; box-shadow: inset 0 0 0 .13em var(--wmute); }
+.stage .cbx.no::after { display: none; }
+.stage .un-row small { margin-left: auto; color: var(--wmute); }
+.stage .un-foot { position: absolute; left: 0; right: 0; bottom: 0; padding: .6em .9em; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--wline); }
+.stage .un-btn { padding: .3em 1em; border-radius: .55em; background: var(--acc); color: #fff; font-weight: 600; font-size: .9em; animation: un-press var(--T) infinite; animation-delay: calc(0s - var(--T)); }
+@keyframes un-press { 0%, 56% { transform: none; filter: none; } 58% { transform: scale(.93); filter: brightness(.9); } 62%, 100% { transform: none; } }
+.stage .un-fin { position: absolute; left: 0; right: 0; bottom: 0; padding: .6em .9em; text-align: center; background: var(--win); font-weight: 600; color: #1f8a4c; border-top: 1px solid var(--wline); }
+[data-theme="dark"] .stage .un-fin { color: #4cc27a; }
+
+/* ============ 垃圾清理 ============ */
+.stage .cl-win { left: 12%; top: 7%; width: 76%; height: 86%; }
+.stage .cl-head { padding: .7em .9em .2em; display: flex; justify-content: space-between; align-items: center; font-size: .85em; }
+.stage .cl-head .sc { color: var(--wmute); animation: cl-scan var(--T) infinite; animation-delay: calc(0s - var(--T)); }
+@keyframes cl-scan { 0%, 52% { opacity: 1; } 58%, 100% { opacity: 0; } }
+.stage .cl-row { display: grid; grid-template-columns: 6.2em 1fr 3.6em; gap: .7em; align-items: center; padding: .5em .9em; font-size: .88em; border-top: 1px solid var(--wline); }
+.stage .cl-row .bar { height: .6em; border-radius: .3em; background: var(--wline); overflow: hidden; }
+.stage .cl-row .bar i { display: block; height: 100%; width: var(--w); background: var(--acc); transform-origin: left; animation: cl-fill var(--T) cubic-bezier(.2, .8, .2, 1) infinite; animation-delay: calc(var(--d, 0s) - var(--T)); }
+@keyframes cl-fill { 0%, 8% { transform: scaleX(0); } 30%, 100% { transform: scaleX(1); } }
+.stage .cl-row .tag { font-size: .75em; display: block; color: #1f8a4c; }
+.stage .cl-row .tag.mid { color: #c77700; }
+[data-theme="dark"] .stage .cl-row .tag { color: #4cc27a; }
+[data-theme="dark"] .stage .cl-row .tag.mid { color: #ffb340; }
+.stage .cl-row .sz { text-align: right; color: var(--wmute); }
+.stage .cl-total { position: absolute; left: 0; right: 0; bottom: 0; padding: .7em .9em; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--wline); font-weight: 650; font-size: 1.05em; }
+.stage .cl-total .go { padding: .25em .9em; border-radius: .5em; background: var(--acc); color: #fff; font-size: .8em; }
+
+/* ============ 隐私清理 ============ */
+.stage .pv-win { left: 12%; top: 7%; width: 76%; height: 86%; }
+.stage .pv-cols { display: grid; grid-template-columns: 1fr 1.3fr; gap: 0; height: calc(100% - 1.8em); }
+.stage .pv-cols > div { padding: .6em .9em; }
+.stage .pv-cols > div + div { border-left: 1px solid var(--wline); }
+.stage .pv-cols h5 { margin: 0 0 .4em; font-size: .78em; font-weight: 600; color: var(--wmute); }
+.stage .pv-it { display: flex; align-items: center; gap: .6em; padding: .4em 0; font-size: .92em; }
+.stage .pv-it .cbx { animation: pv-tick var(--T) infinite; animation-delay: calc(var(--d, 0s) - var(--T)); }
+@keyframes pv-tick { 0%, 14% { background: transparent; box-shadow: inset 0 0 0 .13em var(--wmute); } 18%, 100% { background: var(--acc); box-shadow: none; } }
+.stage .pv-it .cbx::after { animation: pv-tick-c var(--T) infinite; animation-delay: calc(var(--d, 0s) - var(--T)); }
+@keyframes pv-tick-c { 0%, 14% { opacity: 0; } 18%, 100% { opacity: 1; } }
+.stage .pv-clear { overflow: hidden; animation: pv-clear var(--T) cubic-bezier(.4, 0, .2, 1) infinite; animation-delay: calc(var(--o, 0s) - var(--T)); }
+@keyframes pv-clear { 0%, 58% { max-height: 2.6em; opacity: 1; } 68%, 100% { max-height: 0; opacity: 0; padding-top: 0; padding-bottom: 0; } }
+.stage .pv-btn { position: absolute; right: .9em; bottom: .7em; padding: .3em 1em; border-radius: .55em; background: var(--acc); color: #fff; font-weight: 600; font-size: .9em; animation: un-press var(--T) infinite; animation-delay: calc(0s - var(--T)); }
+.stage .pv-fin { position: absolute; left: 0; right: 0; bottom: .9em; text-align: center; font-weight: 600; color: #1f8a4c; }
+[data-theme="dark"] .stage .pv-fin { color: #4cc27a; }
+
+/* ============ 系统维护 ============ */
+.stage .mt-win { left: 14%; top: 9%; width: 72%; height: 80%; }
+.stage .mt-row { display: flex; align-items: center; gap: .8em; padding: .75em 1em; border-top: 1px solid var(--wline); font-size: .95em; }
+.stage .mt-row .nm { flex: 1; }
+.stage .st { position: relative; width: 1.4em; height: 1.4em; flex: none; }
+.stage .st > * { position: absolute; inset: 0; }
+.stage .st .sp { border-radius: 50%; border: .18em solid var(--wline); border-top-color: var(--acc); opacity: 0; animation: mt-spin 1s linear infinite, mt-spin-vis var(--T) infinite; animation-delay: 0s, calc(var(--d, 0s) - var(--T)); }
+@keyframes mt-spin { to { transform: rotate(360deg); } }
+@keyframes mt-spin-vis { 0%, 6% { opacity: 0; } 10%, 24% { opacity: 1; } 28%, 100% { opacity: 0; } }
+.stage .st .ok { border-radius: 50%; background: #30d158; opacity: 1; animation: mt-ok var(--T) infinite; animation-delay: calc(var(--d, 0s) - var(--T)); }
+.stage .st .ok::after { content: ""; position: absolute; left: .45em; top: .2em; width: .35em; height: .7em; border: solid #fff; border-width: 0 .17em .17em 0; transform: rotate(45deg); }
+@keyframes mt-ok { 0%, 26% { opacity: 0; transform: scale(.5); } 32%, 93% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+.stage .mt-row .res { font-size: .8em; color: #1f8a4c; animation: mt-ok var(--T) infinite; animation-delay: calc(var(--d, 0s) - var(--T)); }
+[data-theme="dark"] .stage .mt-row .res { color: #4cc27a; }
+
+/* ============ 系统微调 ============ */
+.stage .tw-win { left: 8%; top: 8%; width: 54%; height: 58%; }
+.stage .tw-row { display: flex; align-items: center; gap: .8em; padding: .8em 1em; border-top: 1px solid var(--wline); font-size: .92em; }
+.stage .tw-row .nm { flex: 1; }
+.stage .tw-row .tg.flip { animation-name: tw-bg; }
+.stage .tw-row .tg.flip::after { animation-name: tw-knob; }
+@keyframes tw-bg { 0%, 24% { background: var(--wline); box-shadow: inset 0 0 0 1px var(--wline); } 28%, 100% { background: var(--acc); box-shadow: none; } }
+@keyframes tw-knob { 0%, 24% { left: .15em; } 32%, 100% { left: 1.15em; } }
+.stage .tw-ok { position: absolute; left: 0; right: 0; bottom: 0; padding: .5em 1em; border-top: 1px solid var(--wline); font-size: .85em; color: #1f8a4c; font-weight: 600; }
+[data-theme="dark"] .stage .tw-ok { color: #4cc27a; }
+.stage .dock { position: absolute; left: 50%; bottom: 3%; transform: translateX(-50%); display: flex; gap: .6em; padding: .5em .8em; border-radius: 1.1em; animation: tw-dock var(--T) cubic-bezier(.5, 0, .2, 1) infinite; animation-delay: calc(0s - var(--T)); z-index: 3; }
+@keyframes tw-dock { 0%, 30% { transform: translate(-50%, 0); } 38%, 93% { transform: translate(-50%, 150%); } 100% { transform: translate(-50%, 0); } }
+.stage .dock i { width: 2.2em; height: 2.2em; border-radius: .6em; background: #8e8e93; }
+.stage .dock i:nth-child(1) { background: #0a84ff; }
+.stage .dock i:nth-child(2) { background: #ff9f0a; }
+.stage .dock i:nth-child(3) { background: #30d158; }
+.stage .dock i:nth-child(4) { background: #bf5af2; }
+.stage .dock i:nth-child(5) { background: #ff453a; }
