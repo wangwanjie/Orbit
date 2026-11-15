@@ -31,10 +31,13 @@
 </script>
 <link rel="stylesheet" href="assets/site.css">
 <link rel="stylesheet" href="assets/demos.css">
+<link rel="stylesheet" href="assets/play.css">
 <script src="assets/data.js" defer></script>
 <script src="assets/site.js" defer></script>
 <script src="assets/demos.js" defer></script>
 <script src="assets/home.js" defer></script>
+<script src="assets/play.js" defer></script>
+<script src="assets/fx.js" defer></script>
 </head>
 <body data-title-key="homeTitle" data-desc-key="homeDesc">
 <a class="skip" href="#main" data-i18n="skip">跳到正文</a>
@@ -90,17 +93,37 @@
       </div>
       <p class="fine"><span data-i18n="req">需要 macOS 13 或更高版本，安装包已通过 Apple 公证</span> · <a href="https://github.com/wangwanjie/Orbit/releases/latest"><span data-i18n="verPrefix">最新版本</span> <span class="ver-num">1.0.4</span></a></p>
     </div>
-    <figure class="window">
-      <div class="win-stack" id="heroShot">
-        <img class="is-on" src="assets/img/launcher-1440.webp" srcset="assets/img/launcher-800.webp 800w, assets/img/launcher-1440.webp 1440w" sizes="(max-width: 900px) 100vw, 600px" width="1440" height="960" alt="Orbit 控制中心的启动器设置页" data-i18n-attr="alt:v1alt" decoding="async" fetchpriority="high">
+    <div class="play-wrap">
+      <div class="stage play" id="playStage"><div class="scn">
+        <div class="mb"><b>Orbit</b><span class="sp"></span><i class="ic"></i><i class="ic c2"></i><span>9:41</span><i class="ic orb"></i></div>
+        <div class="desk">
+          <div class="win pw" id="pWin">
+            <div class="tb"><i></i><i></i><i></i><span data-i18n="play.win">设计稿</span></div>
+            <div class="pbody"><div class="blk"></div><div class="ln" style="width:70%"></div><div class="ln" style="width:48%"></div><div class="pasted" id="pPaste"></div></div>
+          </div>
+          <div class="pl glass" id="pLaunch">
+            <div class="pbar"><span class="mag"></span><input id="pInput" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" data-i18n-attr="placeholder:play.ph" placeholder="搜索应用，或输入算式……" aria-label="Launcher"></div>
+            <ul class="pres" id="pRes"></ul>
+          </div>
+          <div class="pc glass" id="pClip"><div class="pcards" id="pCards"></div></div>
+          <div class="ptoast glass" id="pToast" role="status" aria-live="polite"></div>
+        </div>
+      </div></div>
+      <div class="play-keys nudge" id="pKeys">
+        <button type="button" data-act="launcher"><kbd>⌥Space</kbd><span data-i18n="play.k.launcher">启动器</span></button>
+        <button type="button" data-act="left" data-snap="left"><kbd>⌃⌥←</kbd><span data-i18n="play.k.left">左半屏</span></button>
+        <button type="button" data-act="right" data-snap="right"><kbd>⌃⌥→</kbd><span data-i18n="play.k.right">右半屏</span></button>
+        <button type="button" data-act="max" data-snap="max"><kbd>⌃⌥↩</kbd><span data-i18n="play.k.max">最大化</span></button>
+        <button type="button" data-act="center" data-snap="center"><kbd>⌃⌥C</kbd><span data-i18n="play.k.center">居中</span></button>
+        <button type="button" data-act="clip"><kbd>⇧⌘V</kbd><span data-i18n="play.k.clip">剪贴板</span></button>
       </div>
-      <figcaption data-i18n="heroShotCap">控制中心：每个模块一页设置，顶部的开关随时启停。</figcaption>
-    </figure>
+      <p class="fine" data-i18n="play.try">下面是一个模拟的桌面：用键盘按快捷键，或点下面的按钮，试试看。</p>
+    </div>
   </section>
 
   <section class="sec" id="features">
     <div class="wrap">
-      <header class="sec-head">
+      <header class="sec-head" data-rv>
         <h2 data-i18n="featTitle">包含哪些功能</h2>
         <p data-i18n="featLead">共 17 个模块，分四组。点进任意一项，看具体怎么用、能省下哪些步骤。</p>
       </header>
@@ -122,11 +145,11 @@
 
   <section class="sec" id="views">
     <div class="wrap">
-      <header class="sec-head">
+      <header class="sec-head" data-rv>
         <h2 data-i18n="shotsTitle">控制中心里的几个页面</h2>
         <p data-i18n="shotsLead">侧边栏按效率、截图与录制、文件、系统四组排列。截图为简体中文界面。</p>
       </header>
-      <div class="views">
+      <div class="views" data-rv>
         <div class="view-tabs" role="tablist" id="viewTabs" aria-label="截图" data-i18n-attr="aria-label:shotsLabel">
           <button type="button" role="tab" data-view="0" aria-selected="true"><b data-i18n="v1t">启动器</b><small data-i18n="v1d"></small></button>
           <button type="button" role="tab" data-view="1" aria-selected="false"><b data-i18n="v2t">剪贴板</b><small data-i18n="v2d"></small></button>
@@ -147,30 +170,30 @@
 
   <section class="sec" id="rules">
     <div class="wrap">
-      <header class="sec-head"><h2 data-i18n="rulesTitle">所有模块共用的几个约定</h2></header>
+      <header class="sec-head" data-rv><h2 data-i18n="rulesTitle">所有模块共用的几个约定</h2></header>
       <ul class="rules">
-        <li><h3 data-i18n="r1t"></h3><p data-i18n="r1d"></p></li>
-        <li><h3 data-i18n="r2t"></h3><p data-i18n="r2d"></p></li>
-        <li><h3 data-i18n="r3t"></h3><p data-i18n="r3d"></p></li>
-        <li><h3 data-i18n="r4t"></h3><p data-i18n="r4d"></p></li>
-        <li><h3 data-i18n="r5t"></h3><p data-i18n="r5d"></p></li>
-        <li><h3 data-i18n="r6t"></h3><p data-i18n="r6d"></p></li>
+        <li data-rv><h3 data-i18n="r1t"></h3><p data-i18n="r1d"></p></li>
+        <li data-rv><h3 data-i18n="r2t"></h3><p data-i18n="r2d"></p></li>
+        <li data-rv><h3 data-i18n="r3t"></h3><p data-i18n="r3d"></p></li>
+        <li data-rv><h3 data-i18n="r4t"></h3><p data-i18n="r4d"></p></li>
+        <li data-rv><h3 data-i18n="r5t"></h3><p data-i18n="r5d"></p></li>
+        <li data-rv><h3 data-i18n="r6t"></h3><p data-i18n="r6d"></p></li>
       </ul>
     </div>
   </section>
 
   <section class="sec" id="perms">
     <div class="wrap">
-      <header class="sec-head">
+      <header class="sec-head" data-rv>
         <h2 data-i18n="permTitle">会请求哪些权限</h2>
         <p data-i18n="permLead"></p>
       </header>
       <div class="perms">
-        <div class="perm"><b data-i18n="p1t"></b><span data-i18n="p1d"></span></div>
-        <div class="perm"><b data-i18n="p2t"></b><span data-i18n="p2d"></span></div>
-        <div class="perm"><b data-i18n="p3t"></b><span data-i18n="p3d"></span></div>
-        <div class="perm"><b data-i18n="p4t"></b><span data-i18n="p4d"></span></div>
-        <div class="perm"><b data-i18n="p5t"></b><span data-i18n="p5d"></span></div>
+        <div class="perm" data-rv><b data-i18n="p1t"></b><span data-i18n="p1d"></span></div>
+        <div class="perm" data-rv><b data-i18n="p2t"></b><span data-i18n="p2d"></span></div>
+        <div class="perm" data-rv><b data-i18n="p3t"></b><span data-i18n="p3d"></span></div>
+        <div class="perm" data-rv><b data-i18n="p4t"></b><span data-i18n="p4d"></span></div>
+        <div class="perm" data-rv><b data-i18n="p5t"></b><span data-i18n="p5d"></span></div>
       </div>
       <p class="note" data-i18n="permNote"></p>
     </div>
@@ -184,12 +207,12 @@
         <p class="fine"><span data-i18n="verPrefix2">最新版本</span> <span class="ver-num">1.0.4</span> · <a href="https://github.com/wangwanjie/Orbit/releases/latest" data-i18n="notes">更新说明</a> · <a href="https://github.com/wangwanjie/Orbit/releases" data-i18n="history">历史版本</a></p>
       </div>
       <div class="pads">
-        <a class="pad" href="https://github.com/wangwanjie/Orbit/releases/latest/download/Orbit-arm64.dmg">
+        <a class="pad" data-rv href="https://github.com/wangwanjie/Orbit/releases/latest/download/Orbit-arm64.dmg">
           <b data-i18n="padArmT">Apple 芯片</b>
           <span data-i18n="padArmD">M1 及更新的 Mac</span>
           <span class="pad-file">Orbit-arm64.dmg</span>
         </a>
-        <a class="pad" href="https://github.com/wangwanjie/Orbit/releases/latest/download/Orbit-x86_64.dmg">
+        <a class="pad" data-rv href="https://github.com/wangwanjie/Orbit/releases/latest/download/Orbit-x86_64.dmg">
           <b data-i18n="padIntelT">Intel 芯片</b>
           <span data-i18n="padIntelD">搭载 Intel 处理器的 Mac</span>
           <span class="pad-file">Orbit-x86_64.dmg</span>
@@ -206,12 +229,12 @@
         <p class="fine"><a href="https://github.com/wangwanjie/Orbit-Lite/releases/latest" data-i18n="notes">更新说明</a> · <a href="https://github.com/wangwanjie/Orbit-Lite/releases" data-i18n="history">历史版本</a> · <a href="https://wangwanjie.github.io/Orbit-Lite/" data-i18n="liteHome">Orbit-Lite 主页</a></p>
       </div>
       <div class="pads">
-        <a class="pad" href="https://github.com/wangwanjie/Orbit-Lite/releases/latest/download/Orbit-Lite-Windows-Setup.exe">
+        <a class="pad" data-rv href="https://github.com/wangwanjie/Orbit-Lite/releases/latest/download/Orbit-Lite-Windows-Setup.exe">
           <b data-i18n="liteWinT">Windows 10 / 11</b>
           <span data-i18n="liteWinD"></span>
           <span class="pad-file">Orbit-Lite-Windows-Setup.exe</span>
         </a>
-        <a class="pad" href="https://github.com/wangwanjie/Orbit-Lite/releases/latest/download/Orbit-Lite-macOS.dmg">
+        <a class="pad" data-rv href="https://github.com/wangwanjie/Orbit-Lite/releases/latest/download/Orbit-Lite-macOS.dmg">
           <b data-i18n="liteMacT">macOS 13 或更高</b>
           <span data-i18n="liteMacD"></span>
           <span class="pad-file">Orbit-Lite-macOS.dmg</span>
@@ -222,12 +245,12 @@
 
   <section class="sec" id="faq">
     <div class="wrap">
-      <header class="sec-head"><h2 data-i18n="faqTitle">常见问题</h2></header>
+      <header class="sec-head" data-rv><h2 data-i18n="faqTitle">常见问题</h2></header>
       <div class="faq">
-        <details><summary data-i18n="q1"></summary><p data-i18n="a1"></p></details>
-        <details><summary data-i18n="q2"></summary><p data-i18n="a2"></p></details>
-        <details><summary data-i18n="q3"></summary><p data-i18n="a3"></p></details>
-        <details><summary data-i18n="q4"></summary><p data-i18n="a4"></p></details>
+        <details data-rv><summary data-i18n="q1"></summary><p data-i18n="a1"></p></details>
+        <details data-rv><summary data-i18n="q2"></summary><p data-i18n="a2"></p></details>
+        <details data-rv><summary data-i18n="q3"></summary><p data-i18n="a3"></p></details>
+        <details data-rv><summary data-i18n="q4"></summary><p data-i18n="a4"></p></details>
       </div>
       <p class="credits"><span data-i18n="credits"></span> <span id="credits"></span></p>
     </div>

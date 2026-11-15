@@ -121,6 +121,81 @@ window.ORBIT_DATA = {
    "Control Center: one settings page per module, with a switch at the top to turn it on or off.",
    "控制中心：每個模組一頁設定，頂部的開關隨時啟停。"
   ],
+  "play.try": [
+   "下面是一个模拟的桌面：用键盘按快捷键，或点下面的按钮，试试看。",
+   "This is a mock desktop. Press the shortcuts on your keyboard or click the buttons to try it.",
+   "下面是一個模擬的桌面：用鍵盤按快速鍵，或點下面的按鈕，試試看。"
+  ],
+  "play.win": [
+   "设计稿",
+   "Design",
+   "設計稿"
+  ],
+  "play.ph": [
+   "搜索应用，或输入算式……",
+   "Search apps, or type a sum…",
+   "搜尋應用，或輸入算式……"
+  ],
+  "play.k.launcher": [
+   "启动器",
+   "Launcher",
+   "啟動器"
+  ],
+  "play.k.left": [
+   "左半屏",
+   "Left half",
+   "左半屏"
+  ],
+  "play.k.right": [
+   "右半屏",
+   "Right half",
+   "右半屏"
+  ],
+  "play.k.max": [
+   "最大化",
+   "Maximize",
+   "最大化"
+  ],
+  "play.k.center": [
+   "居中",
+   "Center",
+   "居中"
+  ],
+  "play.k.clip": [
+   "剪贴板",
+   "Clipboard",
+   "剪貼簿"
+  ],
+  "play.search": [
+   "在网页中搜索“{0}”",
+   "Search the web for “{0}”",
+   "在網頁中搜索「{0}」"
+  ],
+  "play.opened": [
+   "已打开 {0}",
+   "Opened {0}",
+   "已開啟 {0}"
+  ],
+  "play.copied": [
+   "已拷贝 {0}",
+   "Copied {0}",
+   "已複製 {0}"
+  ],
+  "play.pasted": [
+   "已粘贴",
+   "Pasted",
+   "已貼上"
+  ],
+  "play.hint": [
+   "真正的 Orbit 里，这些都是全局快捷键，在任何 App 中都能用。",
+   "In the real Orbit these are global shortcuts that work in any app.",
+   "真正的 Orbit 裡，這些都是全域性快速鍵，在任何 App 中都能用。"
+  ],
+  "play.app": [
+   "应用",
+   "Application",
+   "應用"
+  ],
   "featTitle": [
    "包含哪些功能",
    "What's included",
@@ -2248,5 +2323,127 @@ window.ORBIT_DATA = {
    "https://github.com/groue/GRDB.swift",
    "GRDB"
   ]
- ]
+ ],
+ "play": {
+  "apps": [
+   {
+    "name": [
+     "微信",
+     "WeChat",
+     "微信"
+    ],
+    "keys": "weixin wx wechat",
+    "c": [
+     "#4cd964",
+     "#2bb24c"
+    ]
+   },
+   {
+    "name": [
+     "Safari",
+     "Safari",
+     "Safari"
+    ],
+    "keys": "safari saf liulanqi",
+    "c": [
+     "#5ac8fa",
+     "#0a84ff"
+    ]
+   },
+   {
+    "name": [
+     "备忘录",
+     "Notes",
+     "備忘錄"
+    ],
+    "keys": "beiwanglu bwl notes",
+    "c": [
+     "#ffd60a",
+     "#ff9f0a"
+    ]
+   },
+   {
+    "name": [
+     "终端",
+     "Terminal",
+     "終端機"
+    ],
+    "keys": "zhongduan zd terminal",
+    "c": [
+     "#48484a",
+     "#1c1c1e"
+    ]
+   },
+   {
+    "name": [
+     "系统设置",
+     "System Settings",
+     "系統設定"
+    ],
+    "keys": "xitongshezhi xtsz settings",
+    "c": [
+     "#aeaeb2",
+     "#636366"
+    ]
+   },
+   {
+    "name": [
+     "照片",
+     "Photos",
+     "照片"
+    ],
+    "keys": "zhaopian zp photos",
+    "c": [
+     "#ff6482",
+     "#bf5af2"
+    ]
+   },
+   {
+    "name": [
+     "音乐",
+     "Music",
+     "音樂"
+    ],
+    "keys": "yinyue yy music",
+    "c": [
+     "#ff6482",
+     "#ff375f"
+    ]
+   },
+   {
+    "name": [
+     "访达",
+     "Finder",
+     "Finder"
+    ],
+    "keys": "fangda fd finder",
+    "c": [
+     "#64d2ff",
+     "#0a84ff"
+    ]
+   }
+  ],
+  "clips": [
+   [
+    "下周三 14:00 评审",
+    "Review Wed 2 PM",
+    "下週三 14:00 評審"
+   ],
+   [
+    "orbit.app/docs",
+    "orbit.app/docs",
+    "orbit.app/docs"
+   ],
+   [
+    "#4F7CFF",
+    "#4F7CFF",
+    "#4F7CFF"
+   ],
+   [
+    "会议室 B-302",
+    "Room B-302",
+    "會議室 B-302"
+   ]
+  ]
+ }
 };

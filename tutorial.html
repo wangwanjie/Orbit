@@ -35,8 +35,10 @@
 <script src="assets/site.js" defer></script>
 <script src="assets/demos.js" defer></script>
 <script src="assets/tutorial.js" defer></script>
+<script src="assets/fx.js" defer></script>
 </head>
 <body data-title-key="tutTitle" data-desc-key="tutDesc">
+<div class="read-bar" id="readBar" aria-hidden="true"></div>
 <a class="skip" href="#main" data-i18n="skip">跳到正文</a>
 
 <header class="top">
@@ -78,7 +80,7 @@
 <main id="main" class="wrap tut">
   <aside class="toc" id="toc" aria-label="教程目录" data-i18n-attr="aria-label:tocLabel"></aside>
   <div class="tut-body">
-    <header class="tut-head">
+    <header class="tut-head" data-rv>
       <h1 data-i18n="tutH1">Orbit 使用教程</h1>
       <p data-i18n="tutLead"></p>
       <p class="fine" data-i18n="tutNote"></p>

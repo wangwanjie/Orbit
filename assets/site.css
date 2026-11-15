@@ -224,3 +224,31 @@ kbd.k {
   .ftable th.key, .ftable td.key { display: none; }
   .copy { margin-left: 0; }
 }
+
+/* 滚动入场：脚本加上 .fx 后才隐藏，脚本失败时内容照常显示 */
+.fx [data-rv] { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .7s cubic-bezier(.2, .8, .2, 1); transition-delay: calc(var(--i, 0) * 70ms); }
+.fx [data-rv].in { opacity: 1; transform: none; }
+
+/* 卡片聚光：跟随鼠标的一圈柔光，只在悬停的那一张上绘制 */
+.pad, .ba > div, .start-steps > div, .view-tabs button, .tip-grid > div, .rules li { position: relative; isolation: isolate; }
+.pad::before, .ba > div::before, .start-steps > div::before, .view-tabs button::before, .tip-grid > div::before, .rules li::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .25s;
+  background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%);
+}
+.pad:hover::before, .ba > div:hover::before, .start-steps > div:hover::before, .view-tabs button:hover::before, .tip-grid > div:hover::before, .rules li:hover::before { opacity: 1; }
+.pad { transition: transform .2s cubic-bezier(.2, .8, .2, 1), border-color .2s; }
+.pad:hover { transform: translateY(-3px); }
+.btn { transition: transform .15s, filter .15s, background .15s; }
+.btn:active { transform: scale(.97); }
+.ftable tbody tr { transition: background .15s; }
+.ftable tbody tr:hover { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+.ftable td.go a { display: inline-block; transition: transform .2s; }
+.ftable tr:hover td.go a { transform: translateX(4px); }
+
+/* 教程页阅读进度 */
+.read-bar { position: fixed; left: 0; top: 0; right: 0; height: 2px; z-index: 60; background: var(--accent); transform-origin: left; transform: scaleX(0); pointer-events: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fx [data-rv] { opacity: 1; transform: none; transition: none; }
+  .pad, .btn, .ftable td.go a { transition: none; }
+}
