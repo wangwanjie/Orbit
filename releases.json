@@ -1,5 +1,23 @@
 [
   {
+    "version": "1.0.5",
+    "build": "6",
+    "pubDate": "Wed, 18 Nov 2026 10:49:27 GMT",
+    "notesHTML": "<h3>优化</h3>\n<ul>\n<li>OCR 文字识别提速：后台预热识别模型、超大图先缩放再识别；识别期间在选区上显示扫描进度</li>\n</ul>\n<h3>修复</h3>\n<ul>\n<li>全屏、1x 缩放录制 GIF 后，预览窗口超出屏幕、保存等按钮无法点击</li>\n<li>剪贴板空格预览大图时面板超出屏幕</li>\n<li>贴出比屏幕还大的图片（如带阴影的整窗截图）时看不全，现在按屏幕自动缩小</li>\n</ul>",
+    "assets": {
+      "arm64": {
+        "name": "Orbit_v1.0.5_6_arm64.dmg",
+        "length": 8177802,
+        "signature": "MWOurukWJ3xM6+ubefK/xQJsyX359h71CH/Qt4UGyOZgHQ6PtppD/qdaIrEQHkiYqlGxFxel+/ZPCfkoB+W/Cg=="
+      },
+      "x86_64": {
+        "name": "Orbit_v1.0.5_6_x86_64.dmg",
+        "length": 8635381,
+        "signature": "hv+4LLD8U/+wc71Kz8t/BKbBCq9Mi270qPP9IOJY4pMJ5n2vVMbuW2WUmJG7xhP5QTe29Yii1t7JqBT8c+I6Bw=="
+      }
+    }
+  },
+  {
     "version": "1.0.4",
     "build": "5",
     "pubDate": "Sat, 14 Nov 2026 12:16:54 GMT",
