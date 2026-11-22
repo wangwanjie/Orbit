@@ -5,7 +5,42 @@
   var O = window.Orbit;
   var content = document.getElementById('tutContent');
   var toc = document.getElementById('toc');
+  var keyStrip = document.getElementById('keyStrip');
   var tocObserver = null;
+
+  // 分组标记：Orbit 图标的 2×2 磁贴，点亮这一组对应的那一格（与首页模块索引一致）
+  var CAT_TILE = [0, 2, 1, 3];
+  var TILE_COLORS = ['#3B82F6', '#F59E0B', '#EC4899', '#22C55E'];
+  function glyph(tile) {
+    var cells = [
+      '<rect x="1.5" y="1.5" width="6.5" height="6.5" rx="1.9"',
+      '<circle cx="13.25" cy="4.75" r="3.05"',
+      '<rect x="1.5" y="10" width="6.5" height="6.5" rx="1.9"',
+      '<rect x="10" y="10" width="6.5" height="6.5" rx="1.9"'
+    ];
+    var svg = '<svg class="glyph" viewBox="0 0 18 18" aria-hidden="true">';
+    for (var i = 0; i < 4; i++) {
+      svg += cells[i] + (i === tile ? ' style="fill:' + TILE_COLORS[tile] + '"' : '') + '/>';
+    }
+    return svg + '</svg>';
+  }
+
+  function keyOf(m) {
+    return m.key ? (Array.isArray(m.key) ? O.pick(m.key) : m.key) : '';
+  }
+
+  // 页首的默认快捷键速查：只列有默认快捷键的模块，点一下跳到那一节
+  function renderKeyStrip() {
+    var html = '';
+    var mods = O.data.modules;
+    for (var i = 0; i < mods.length; i++) {
+      var key = keyOf(mods[i]);
+      if (key) {
+        html += '<a href="#m-' + mods[i].id + '"><kbd>' + esc(key) + '</kbd><span>' + esc(O.pick(mods[i].name)) + '</span></a>';
+      }
+    }
+    keyStrip.innerHTML = html;
+  }
 
   function esc(s) {
     return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -24,15 +59,16 @@
     for (var i = 0; i < m.steps.length; i++) {
       steps += '<li>' + esc(O.pick(m.steps[i])) + '</li>';
     }
-    var shortcut = m.key ? '<kbd class="k">' + esc(Array.isArray(m.key) ? O.pick(m.key) : m.key) + '</kbd>' : '<span>' + esc(O.t('noShortcut')) + '</span>';
+    var shortcut = m.key ? '<kbd class="k">' + esc(keyOf(m)) + '</kbd>' : '<span>' + esc(O.t('noShortcut')) + '</span>';
     var meta = '<span>' + esc(O.t('shortcutLabel')) + shortcut + '</span>';
     if (m.alt) {
       meta += '<span>' + esc(O.t('replaces')) + (O.lang() === 'en' ? ': ' : '：') + esc(m.alt) + '</span>';
     }
     return '<section class="mod" id="m-' + m.id + '">' +
-      '<header><h2>' + esc(O.pick(m.name)) + '</h2><p class="tagline">' + esc(O.pick(m.tagline)) + '</p><div class="meta">' + meta + '</div></header>' +
+      '<header><h3>' + esc(O.pick(m.name)) + '</h3><p class="tagline">' + esc(O.pick(m.tagline)) + '</p><div class="meta">' + meta + '</div></header>' +
       '<div class="mod-body">' +
-        '<div class="demo-frame">' + window.OrbitDemos.html(m.id) +
+        // 示意动画固定用深色桌面（和首页那台 Mac 一致），不随页面外观切换
+        '<div class="demo-frame"><div class="stage-dark" data-theme="dark">' + window.OrbitDemos.html(m.id) + '</div>' +
           '<div class="demo-cap"><span>' + esc(O.t('tutDemoCap')) + '</span><button type="button" class="replay">' + esc(O.t('replay')) + '</button></div></div>' +
         '<div class="how"><h3>' + esc(O.t('howTitle')) + '</h3><ol>' + steps + '</ol></div>' +
       '</div>' +
@@ -58,7 +94,13 @@
     var tocHtml = '<h4>' + esc(O.t('tutH1')) + '</h4><a href="#start">' + esc(O.t('tocStart')) + '</a>';
     for (var c = 0; c < data.categories.length; c++) {
       var name = O.pick(data.categories[c].name);
-      html += '<h3 class="part-title">' + esc(name) + '</h3>';
+      var count = 0;
+      for (var n = 0; n < data.modules.length; n++) {
+        if (data.modules[n].cat === c) {
+          count += 1;
+        }
+      }
+      html += '<div class="part-title">' + glyph(CAT_TILE[c]) + '<h2>' + esc(name) + '</h2><span>' + count + '</span></div>';
       tocHtml += '<h4>' + esc(name) + '</h4>';
       for (var i = 0; i < data.modules.length; i++) {
         var m = data.modules[i];
@@ -72,6 +114,7 @@
     tocHtml += '<h4>&nbsp;</h4><a href="#tips">' + esc(O.t('tocTips')) + '</a>';
     content.innerHTML = html;
     toc.innerHTML = tocHtml;
+    renderKeyStrip();
     O.apply(content);
     window.OrbitDemos.mount(content);
     watchSections();

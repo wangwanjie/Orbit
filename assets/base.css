@@ -1,0 +1,153 @@
+/* Orbit 官网公共样式：字体、配色（浅色 / 深色）、页头、页脚。首页与教程页共用。 */
+
+/* Instrument Sans（SIL OFL）只覆盖基本拉丁字符；中文与中文标点交给系统字体 */
+@font-face {
+  font-family: "Instrument Sans";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("fonts/instrument-sans-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2013-2014, U+20AC, U+2122, U+2212;
+}
+
+
+:root {
+  --bg: #E5DFD4;
+  --bg-2: #DAD3C6;
+  --paper: #F4F0E8;
+  --ink: #1D1B26;
+  --ink-2: #34313D;
+  --mute: #5A564F;
+  --line: rgba(29, 27, 38, .14);
+  --acc: #4338CA;
+  --acc-deep: #2E2790;
+  --night: #17152B;
+  --night-2: #221F3D;
+  --night-ink: #EEECF6;
+  --night-mute: #ABA7C4;
+  --font: "Instrument Sans", -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --sys: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Helvetica Neue", sans-serif;
+  --pad: clamp(20px, 4.4vw, 64px);
+  /* 随主题变化的阴影、按键与悬停色 */
+  --hover: rgba(29, 27, 38, .06);
+  --edge: rgba(29, 27, 38, .28);
+  --key-top: #FCFBF8;
+  --key-bot: #F1EEE8;
+  --key-side: #CBC5BB;
+  --key-ring: rgba(29, 27, 38, .1);
+  --key-shadow: rgba(29, 27, 38, .35);
+  --kbd-inset: rgba(29, 27, 38, .12);
+  --glyph: rgba(29, 27, 38, .16);
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 400 16px/1.7 var(--font);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+h1, h2, h3 { font-weight: 600; margin: 0; letter-spacing: -.01em; text-wrap: balance; }
+p { margin: 0; text-wrap: pretty; }
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+img { max-width: 100%; display: block; }
+:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; border-radius: 6px; }
+.skip { position: absolute; left: -999px; top: 8px; }
+.skip:focus { left: 8px; z-index: 100; background: var(--paper); padding: 10px 14px; }
+
+
+/* ---------- 页头 ---------- */
+.nav {
+  display: flex; align-items: center; gap: 28px; height: 72px; padding: 0 var(--pad);
+  position: relative; z-index: 5;
+}
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 600; font-size: 19px; letter-spacing: -.01em; min-height: 44px; }
+.brand img { width: 34px; height: 34px; }
+.brand span { font-family: var(--font); }
+.nav .links { display: flex; gap: 4px; margin-left: auto; }
+.ctrls { display: flex; align-items: center; gap: 10px; }
+.nav .links a, .nav .gh {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; text-decoration: none;
+  font-size: 15px; color: var(--ink-2); border-radius: 8px;
+}
+.nav .links a:hover, .nav .gh:hover { background: var(--hover); }
+.nav .gh { width: 44px; justify-content: center; padding: 0; }
+.nav .gh svg { width: 20px; height: 20px; }
+
+.nav .links a[aria-current="page"] { color: var(--ink); font-weight: 600; }
+.wrap { max-width: 1312px; margin: 0 auto; }
+
+/* ---------- 页头：语言与外观切换 ---------- */
+.seg { display: inline-flex; padding: 3px; border-radius: 10px; background: var(--hover); box-shadow: inset 0 0 0 1px var(--line); }
+.seg button {
+  min-width: 36px; height: 32px; padding: 0 8px; border: 0; border-radius: 7px; background: transparent; cursor: pointer;
+  display: inline-grid; place-items: center; font-size: 13px; font-weight: 600; color: var(--mute);
+}
+.seg button:hover { color: var(--ink); }
+.seg button[aria-pressed="true"] { background: var(--paper); color: var(--ink); box-shadow: 0 1px 2px rgba(0, 0, 0, .14); }
+.seg svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+@media (max-width: 1100px) {
+  .nav .links a:not(.keep) { display: none; }
+}
+@media (max-width: 560px) {
+  .seg.theme, .nav .gh { display: none; }
+  .seg button { min-width: 34px; }
+}
+@media (max-width: 900px) {
+  body { font-size: 16px; }
+  .nav { height: 60px; gap: 8px; }
+  .nav .links a:not(.keep) { display: none; }
+}
+
+/* 页脚 */
+.footer { padding: 72px var(--pad) 56px; background: var(--night); color: var(--night-ink); }
+.foot-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 40px; flex-wrap: wrap; }
+.foot-top .brand { color: var(--night-ink); }
+.foot-links { display: flex; flex-wrap: wrap; gap: 4px 8px; }
+.foot-links a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; text-decoration: none; color: var(--night-ink); border-radius: 8px; font-size: 15px; }
+.foot-links a:hover { background: rgba(255, 255, 255, .08); }
+.copy { margin-top: 36px; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, .12); font-size: 14px; color: var(--night-mute); }
+
+
+/* ---------- 深色外观 ---------- */
+[data-theme="dark"] {
+  --bg: #141318;
+  --bg-2: #1C1B22;
+  --paper: #24232B;
+  --ink: #EEECF3;
+  --ink-2: #CDCAD6;
+  --mute: #A29EAD;
+  --line: rgba(255, 255, 255, .12);
+  --acc: #5A4FEA;
+  --acc-deep: #6C62F2;
+  --night: #0D0C17;
+  --night-2: #1E1C34;
+  --hover: rgba(255, 255, 255, .07);
+  --edge: rgba(255, 255, 255, .3);
+  --key-top: #3A3943;
+  --key-bot: #2E2D36;
+  --key-side: #18171D;
+  --key-ring: rgba(255, 255, 255, .08);
+  --key-shadow: rgba(0, 0, 0, .6);
+  --kbd-inset: rgba(0, 0, 0, .35);
+  --glyph: rgba(255, 255, 255, .2);
+  color-scheme: dark;
+}
+[data-theme="dark"] .footer { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06); }
+
+/* 教程页的示意动画（demos.css）沿用旧变量名，这里给出对应关系 */
+:root, [data-theme="dark"] {
+  --muted: var(--mute);
+  --accent: var(--acc);
+  --panel: var(--paper);
+  --line-2: var(--line);
+  --sans: var(--font);
+  --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .01ms !important; }
+}

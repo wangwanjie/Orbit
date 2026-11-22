@@ -1,58 +1,137 @@
-/* 教程页布局 */
-.tut { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 56px; padding-top: 40px; padding-bottom: 72px; align-items: start; }
-.toc { position: sticky; top: 84px; max-height: calc(100vh - 104px); overflow-y: auto; font-size: 14px; padding-right: 4px; }
-.toc h4 { margin: 18px 0 6px; font-size: 12px; font-weight: 600; color: var(--muted); }
-.toc h4:first-child { margin-top: 0; }
-.toc a { display: block; padding: 4px 10px; margin-left: -10px; border-radius: 7px; color: var(--ink-2); }
-.toc a:hover { background: var(--bg-2); text-decoration: none; }
-.toc a.on { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+/* 教程页：与首页同一套语言（暖沙底、键帽、深靛色块）。公共部分在 base.css。 */
 
-.tut-head { padding-bottom: 28px; border-bottom: 1px solid var(--line); }
-.tut-head h1 { font-size: clamp(28px, 4vw, 40px); font-weight: 700; }
-.tut-head p { margin-top: 12px; color: var(--ink-2); max-width: 40em; }
-.tut-head .fine { color: var(--muted); }
+html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+a { text-underline-offset: 3px; }
 
-.part-title { margin: 56px 0 4px; font-size: 13px; font-weight: 600; color: var(--muted); }
-.mod { padding: 40px 0 44px; border-bottom: 1px solid var(--line); }
-.mod:last-child { border-bottom: 0; }
-.mod > header h2 { font-size: 26px; font-weight: 700; }
-.mod .tagline { margin-top: 8px; font-size: 17px; color: var(--ink-2); max-width: 40em; }
-.mod .meta { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px 22px; font-size: 13.5px; color: var(--muted); }
-.mod .meta kbd.k { margin-left: 4px; }
-.mod-body { margin-top: 24px; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 32px; align-items: start; }
-.how h3, .gain h3 { font-size: 14px; font-weight: 650; color: var(--muted); margin-bottom: 10px; }
-.how ol { margin: 0; padding: 0; list-style: none; counter-reset: step; }
-.how li { position: relative; padding: 0 0 12px 32px; font-size: 15px; line-height: 1.65; color: var(--ink-2); counter-increment: step; }
-.how li::before {
-  content: counter(step); position: absolute; left: 0; top: 1px; width: 22px; height: 22px; border-radius: 50%;
-  display: grid; place-items: center; font-size: 12px; font-weight: 600; color: var(--accent); background: var(--accent-soft);
+/* 阅读进度条 */
+.read-bar { position: fixed; left: 0; top: 0; right: 0; height: 3px; z-index: 60; background: var(--acc); transform-origin: left; transform: scaleX(0); pointer-events: none; }
+
+/* 滚动入场：脚本加上 .fx 后才隐藏，脚本失败时内容照常显示 */
+.fx [data-rv] { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .7s cubic-bezier(.2, .8, .2, 1); transition-delay: calc(var(--i, 0) * 70ms); }
+.fx [data-rv].in { opacity: 1; transform: none; }
+
+/* 键帽：教程里的快捷键都长这样 */
+kbd.k, .keystrip kbd {
+  display: inline-block; font: 600 14px/1 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif; letter-spacing: .03em;
+  padding: 7px 9px 8px; border-radius: 8px; color: var(--ink); white-space: nowrap;
+  background: linear-gradient(180deg, var(--key-top), var(--key-bot));
+  box-shadow: 0 0 0 1px var(--key-ring), 0 2px 0 var(--key-side), 0 3px 6px -3px var(--key-shadow);
 }
-.gain { margin-top: 28px; }
-.ba { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.ba > div { padding: 16px 18px; border-radius: var(--r); border: 1px solid var(--line-2); background: var(--panel); }
-.ba > div span { display: block; margin-bottom: 6px; font-size: 12px; font-weight: 650; color: var(--muted); }
-.ba > div p { font-size: 14.5px; line-height: 1.65; color: var(--ink-2); }
-.ba .after { border-color: color-mix(in srgb, var(--accent) 55%, var(--line-2)); background: var(--accent-soft); }
-.ba .after span { color: var(--accent); }
-.tip { margin-top: 14px; font-size: 14px; color: var(--muted); }
-.tip b { color: var(--ink-2); margin-right: 6px; }
 
-.start-steps { margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.start-steps > div { padding: 16px 18px; border-radius: var(--r); border: 1px solid var(--line-2); background: var(--panel); }
-.start-steps h3, .tip-grid h3 { font-size: 15px; font-weight: 650; }
-.start-steps p, .tip-grid p { margin-top: 4px; font-size: 14.5px; color: var(--muted); line-height: 1.65; }
-.start-steps h3 span { display: inline-grid; place-items: center; width: 22px; height: 22px; margin-right: 8px; border-radius: 50%; font-size: 12px; background: var(--accent-soft); color: var(--accent); }
-.tip-grid { margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 22px 32px; }
-.sect-h { margin-top: 0; font-size: 24px; font-weight: 700; }
-.sect-lead { margin-top: 6px; color: var(--muted); }
-.block { padding: 48px 0 8px; }
+/* ---------- 页首 ---------- */
+.tut-head { padding: 72px var(--pad) 64px; }
+.tut-head h1 { font-size: clamp(40px, 5vw, 72px); line-height: 1.06; letter-spacing: -.025em; word-break: keep-all; }
+.tut-head .lead { margin-top: 22px; font-size: 19px; color: var(--ink-2); max-width: 32em; }
+.tut-head .fine { margin-top: 10px; font-size: 14px; color: var(--mute); }
+.keystrip { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 40px; padding-top: 28px; border-top: 2px solid var(--ink); }
+.keystrip a {
+  display: inline-flex; align-items: center; gap: 12px; min-height: 52px; padding: 0 16px 0 8px; border-radius: 12px;
+  background: var(--paper); box-shadow: 0 0 0 1px var(--line); text-decoration: none; font-size: 15px; color: var(--ink-2);
+  transition: box-shadow .15s, transform .15s;
+}
+.keystrip a:hover { box-shadow: 0 0 0 1.5px var(--acc); transform: translateY(-1px); }
 
+/* ---------- 正文：左侧目录 + 右侧内容 ---------- */
+/* 宽度扣掉两侧留白，和页首、页头的左边线对齐 */
+.tut { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 72px; width: calc(100% - var(--pad) * 2); padding: 24px 0 120px; align-items: start; }
+.toc { position: sticky; top: 24px; max-height: calc(100vh - 48px); overflow-y: auto; font-size: 15px; padding: 4px 4px 4px 0; scrollbar-width: thin; }
+/* 目录本身可滚动，链接不能用负外边距（会被裁掉）；分组标题缩进同样的 12px 来和链接文字对齐 */
+.toc h4 { margin: 20px 0 6px; padding-left: 12px; font-size: 13px; font-weight: 600; color: var(--mute); }
+.toc h4:first-child { margin-top: 0; }
+.toc a { display: flex; align-items: center; min-height: 34px; padding: 0 12px; border-radius: 8px; color: var(--ink-2); text-decoration: none; }
+.toc a:hover { background: var(--hover); }
+.toc a.on { background: var(--night); color: var(--night-ink); font-weight: 600; }
+
+/* 开始之前 / 通用技巧：和首页「约定」同样的细线列表 */
+.block { padding: 0 0 72px; }
+.block + .part-title { margin-top: 24px; }
+.sect-h { font-size: clamp(30px, 3vw, 42px); line-height: 1.15; letter-spacing: -.02em; }
+.sect-lead { margin-top: 10px; font-size: 17px; color: var(--ink-2); }
+.start-steps, .tip-grid { margin-top: 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; border-top: 2px solid var(--ink); }
+.start-steps > div, .tip-grid > div { padding: 22px 0 24px; border-bottom: 1px solid var(--line); }
+.start-steps h3, .tip-grid h3 { display: flex; align-items: center; gap: 12px; font-size: 19px; line-height: 1.35; }
+.start-steps h3 span {
+  display: inline-grid; place-items: center; width: 32px; height: 32px; flex: none; border-radius: 8px; font-size: 15px;
+  background: linear-gradient(180deg, var(--key-top), var(--key-bot)); box-shadow: 0 0 0 1px var(--key-ring), 0 2px 0 var(--key-side);
+}
+.start-steps p, .tip-grid p { margin-top: 8px; font-size: 16px; color: var(--ink-2); }
+
+/* 分组标题：与首页模块索引同一个 2×2 标记 */
+.part-title { display: flex; align-items: center; gap: 14px; margin-top: 48px; padding: 0 0 18px; border-bottom: 2px solid var(--ink); }
+.part-title h2 { font-size: clamp(30px, 3vw, 42px); line-height: 1.15; letter-spacing: -.02em; }
+.part-title span { margin-left: auto; font-size: 15px; color: var(--mute); }
+.glyph { width: 30px; height: 30px; flex: none; }
+.glyph rect, .glyph circle { fill: var(--glyph); }
+
+/* 模块 */
+.mod { padding: 48px 0 56px; border-bottom: 1px solid var(--line); }
+.mod > header h3 { font-size: clamp(26px, 2.4vw, 34px); line-height: 1.2; letter-spacing: -.015em; }
+.mod .tagline { margin-top: 10px; font-size: 18px; color: var(--ink-2); max-width: 36em; }
+.mod .meta { margin-top: 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 28px; font-size: 14px; color: var(--mute); }
+.mod .meta kbd.k { margin-left: 10px; }
+.mod-body { margin-top: 32px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 44px; align-items: start; }
+.how h3, .gain h3 { font-size: 15px; font-weight: 600; color: var(--mute); margin-bottom: 14px; }
+.how ol { margin: 0; padding: 0; list-style: none; counter-reset: step; }
+.how li { position: relative; padding: 0 0 16px 44px; font-size: 16px; line-height: 1.7; color: var(--ink-2); counter-increment: step; }
+.how li::before {
+  content: counter(step); position: absolute; left: 0; top: -1px; width: 28px; height: 28px; border-radius: 7px;
+  display: grid; place-items: center; font: 600 13px/1 var(--font); color: var(--ink);
+  background: linear-gradient(180deg, var(--key-top), var(--key-bot)); box-shadow: 0 0 0 1px var(--key-ring), 0 2px 0 var(--key-side);
+}
+.gain { margin-top: 36px; }
+.ba { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.ba > div { padding: 22px 24px; border-radius: 18px; }
+.ba > div span { display: block; margin-bottom: 8px; font-size: 14px; font-weight: 600; }
+.ba > div p { font-size: 16px; line-height: 1.7; }
+.ba .before { background: var(--paper); box-shadow: 0 0 0 1px var(--line); }
+.ba .before span { color: var(--mute); }
+.ba .before p { color: var(--ink-2); }
+.ba .after { background: var(--night); color: var(--night-ink); }
+.ba .after span { color: #B9B4FF; }
+.ba .after p { color: var(--night-ink); }
+.tip { margin-top: 18px; font-size: 15px; color: var(--ink-2); padding: 14px 18px; border-radius: 12px; background: var(--bg-2); }
+.tip b { color: var(--ink); margin-right: 8px; }
+
+/* 示意动画：固定为深色桌面，壁纸与首页那台 Mac 一致 */
+.stage-dark { border-radius: 14px; box-shadow: 0 30px 60px -30px rgba(23, 21, 43, .6); }
+[data-theme="dark"] .stage-dark .stage {
+  --wall:
+    radial-gradient(70% 45% at 72% 100%, rgba(255, 178, 122, .9) 0%, rgba(244, 128, 112, .5) 32%, rgba(180, 90, 170, 0) 70%),
+    linear-gradient(180deg, #120F33 0%, #1E1A55 30%, #3A2F8F 56%, #6A48B4 76%, #B565A6 90%, #F09B7C 100%);
+  --glass: rgba(36, 34, 48, .9); --win: #1F1F24; --wtext: #F2F2F5; --wmute: #A1A1A8;
+  --wline: rgba(255, 255, 255, .1); --acc: #8B85FF; --acc-soft: rgba(124, 116, 255, .24); --dim: rgba(0, 0, 0, .5);
+  border: 0; border-radius: 14px; box-shadow: 0 0 0 1px rgba(23, 21, 43, .3);
+}
+.demo-cap { margin-top: 12px; font-size: 14px; color: var(--mute); }
+.replay {
+  min-height: 40px; padding: 0 16px; border: 0; border-radius: 10px; cursor: pointer; font-size: 14px; color: var(--ink-2);
+  background: transparent; box-shadow: inset 0 0 0 1px var(--line);
+}
+.replay:hover { box-shadow: inset 0 0 0 1.5px var(--ink-2); color: var(--ink); }
+
+[data-theme="dark"] .toc a.on { background: var(--acc); color: #fff; }
+[data-theme="dark"] .ba .after { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08); }
+
+/* ---------- 窄屏 ---------- */
 @media (max-width: 1000px) {
-  .tut { grid-template-columns: 1fr; gap: 24px; }
-  .toc { position: static; max-height: none; display: flex; flex-wrap: wrap; gap: 4px 6px; padding: 0 0 16px; border-bottom: 1px solid var(--line); }
+  .tut { grid-template-columns: 1fr; gap: 8px; }
+  .toc { position: static; max-height: none; display: flex; flex-wrap: nowrap; overflow-x: auto; gap: 6px; padding: 0 0 16px; margin: 0 calc(var(--pad) * -1); padding-left: var(--pad); scrollbar-width: none; }
+  .toc::-webkit-scrollbar { display: none; }
   .toc h4 { display: none; }
-  .toc a { margin: 0; padding: 3px 10px; background: var(--bg-2); border-radius: 20px; font-size: 13px; }
+  .toc a { flex: none; margin: 0; min-height: 40px; padding: 0 14px; background: var(--paper); box-shadow: 0 0 0 1px var(--line); border-radius: 20px; font-size: 14px; }
 }
 @media (max-width: 800px) {
-  .mod-body, .ba, .start-steps, .tip-grid { grid-template-columns: 1fr; }
+  .tut-head { padding: 40px var(--pad) 40px; }
+  .tut-head .lead { font-size: 17px; }
+  .keystrip { margin-top: 28px; padding-top: 20px; }
+  .keystrip a { font-size: 15px; }
+  .mod-body, .ba, .start-steps, .tip-grid { grid-template-columns: 1fr; gap: 16px; }
+  .mod-body { gap: 28px; }
+  .start-steps, .tip-grid { gap: 0; }
+  .mod { padding: 36px 0 44px; }
+  .mod .tagline { font-size: 17px; }
+  .part-title { margin-top: 32px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fx [data-rv] { opacity: 1; transform: none; transition: none; }
 }

@@ -26,6 +26,11 @@ window.ORBIT_DATA = {
    "FAQ",
    "常見問題"
   ],
+  "navLabel": [
+   "主导航",
+   "Main navigation",
+   "主導航"
+  ],
   "langLabel": [
    "语言",
    "Language",
@@ -81,16 +86,6 @@ window.ORBIT_DATA = {
    "Orbit puts a launcher, window manager, clipboard history, screenshots and recording, an app uninstaller, a cleaner and more into one menu bar app. Every feature can be turned off on its own.",
    "Orbit 把啟動器、視窗管理、剪貼簿歷史、截圖錄屏、應用解除安裝、垃圾清理等十幾個常用功能放進一個選單列 App，每個功能都可以單獨關閉。"
   ],
-  "heroTitle": [
-   "常驻菜单栏的 Mac 工具箱",
-   "A toolbox that lives in your Mac's menu bar",
-   "常駐選單列的 Mac 工具箱"
-  ],
-  "heroLead": [
-   "启动器、窗口管理、剪贴板历史、截图录屏、应用卸载、垃圾清理……这些平时要分别装软件的功能，Orbit 放在了一起。每个功能都能单独关掉，关掉的就不占资源。",
-   "A launcher, window manager, clipboard history, screenshots and screen recording, an app uninstaller, a cleaner… the things you'd normally install separate apps for, in one place. Each feature can be switched off on its own, and a feature that's off uses nothing.",
-   "啟動器、視窗管理、剪貼簿歷史、截圖錄屏、應用解除安裝、垃圾清理……這些平時要分別裝軟體的功能，Orbit 放在了一起。每個功能都能單獨關掉，關掉的就不佔資源。"
-  ],
   "dlArm": [
    "下载 Apple 芯片版",
    "Download for Apple silicon",
@@ -106,160 +101,10 @@ window.ORBIT_DATA = {
    "Read the tutorial",
    "看使用教程"
   ],
-  "req": [
-   "需要 macOS 13 或更高版本，安装包已通过 Apple 公证",
-   "Requires macOS 13 or later. Notarized by Apple.",
-   "需要 macOS 13 或更高版本，安裝包已通過 Apple 公證"
-  ],
-  "verPrefix": [
-   "最新版本",
-   "Latest version",
-   "最新版本"
-  ],
-  "heroShotCap": [
-   "控制中心：每个模块一页设置，顶部的开关随时启停。",
-   "Control Center: one settings page per module, with a switch at the top to turn it on or off.",
-   "控制中心：每個模組一頁設定，頂部的開關隨時啟停。"
-  ],
-  "play.try": [
-   "下面是一个模拟的桌面：用键盘按快捷键，或点下面的按钮，试试看。",
-   "This is a mock desktop. Press the shortcuts on your keyboard or click the buttons to try it.",
-   "下面是一個模擬的桌面：用鍵盤按快速鍵，或點下面的按鈕，試試看。"
-  ],
-  "play.win": [
-   "设计稿",
-   "Design",
-   "設計稿"
-  ],
-  "play.ph": [
-   "搜索应用，或输入算式……",
-   "Search apps, or type a sum…",
-   "搜尋應用，或輸入算式……"
-  ],
-  "play.k.launcher": [
-   "启动器",
-   "Launcher",
-   "啟動器"
-  ],
-  "play.k.left": [
-   "左半屏",
-   "Left half",
-   "左半屏"
-  ],
-  "play.k.right": [
-   "右半屏",
-   "Right half",
-   "右半屏"
-  ],
-  "play.k.max": [
-   "最大化",
-   "Maximize",
-   "最大化"
-  ],
-  "play.k.center": [
-   "居中",
-   "Center",
-   "居中"
-  ],
-  "play.k.clip": [
-   "剪贴板",
-   "Clipboard",
-   "剪貼簿"
-  ],
-  "play.search": [
-   "在网页中搜索“{0}”",
-   "Search the web for “{0}”",
-   "在網頁中搜索「{0}」"
-  ],
-  "play.opened": [
-   "已打开 {0}",
-   "Opened {0}",
-   "已開啟 {0}"
-  ],
-  "play.copied": [
-   "已拷贝 {0}",
-   "Copied {0}",
-   "已複製 {0}"
-  ],
-  "play.pasted": [
-   "已粘贴",
-   "Pasted",
-   "已貼上"
-  ],
-  "play.hint": [
-   "真正的 Orbit 里，这些都是全局快捷键，在任何 App 中都能用。",
-   "In the real Orbit these are global shortcuts that work in any app.",
-   "真正的 Orbit 裡，這些都是全域性快速鍵，在任何 App 中都能用。"
-  ],
-  "play.app": [
-   "应用",
-   "Application",
-   "應用"
-  ],
-  "featTitle": [
-   "包含哪些功能",
-   "What's included",
-   "包含哪些功能"
-  ],
-  "featLead": [
-   "共 17 个模块，分四组。点进任意一项，看具体怎么用、能省下哪些步骤。",
-   "17 modules in four groups. Open any one to see how it works and which steps it saves.",
-   "共 17 個模組，分四組。點進任意一項，看具體怎麼用、能省下哪些步驟。"
-  ],
-  "colName": [
-   "模块",
-   "Module",
-   "模組"
-  ],
-  "colWhat": [
-   "能做什么",
-   "What it does",
-   "能做什麼"
-  ],
-  "colAlt": [
-   "常见的同类软件",
-   "Similar apps",
-   "常見的同類軟體"
-  ],
-  "colKey": [
-   "默认快捷键",
-   "Default shortcut",
-   "預設快速鍵"
-  ],
-  "seeHow": [
-   "怎么用",
-   "How to use",
-   "怎麼用"
-  ],
-  "featMore": [
-   "所有快捷键都可以在控制中心的「快捷键」页修改。",
-   "Every shortcut can be changed on the Shortcuts page in Control Center.",
-   "所有快速鍵都可以在控制中心的「快速鍵」頁修改。"
-  ],
-  "demoTitle": [
-   "先看一眼实际的样子",
-   "A quick look",
-   "先看一眼實際的樣子"
-  ],
-  "demoLead": [
-   "按 ⌥Space，输入「wx」，回车，微信就打开了。其他模块的演示在教程里。",
-   "Press ⌥Space, type “saf”, hit Return, and Safari opens. Demos for the other modules are in the tutorial.",
-   "按 ⌥Space，輸入「wx」，回車，微信就打開了。其他模組的演示在教程裡。"
-  ],
-  "demoLink": [
-   "查看全部演示",
-   "See all demos",
-   "檢視全部演示"
-  ],
   "shotsTitle": [
    "控制中心里的几个页面",
    "A few pages from Control Center",
    "控制中心裡的幾個頁面"
-  ],
-  "shotsLead": [
-   "侧边栏按效率、截图与录制、文件、系统四组排列。截图为简体中文界面。",
-   "The sidebar groups modules into Productivity, Capture, Files and System. Screenshots are in Simplified Chinese.",
-   "側邊欄按效率、截圖與錄製、檔案、系統四組排列。截圖為簡體中文介面。"
   ],
   "shotsLabel": [
    "截图",
@@ -335,11 +180,6 @@ window.ORBIT_DATA = {
    "按需启停",
    "Switch on only what you use",
    "按需啟停"
-  ],
-  "r1d": [
-   "停用的模块不注册快捷键，也不在后台运行任何任务。",
-   "A disabled module registers no shortcuts and runs nothing in the background.",
-   "停用的模組不註冊快速鍵，也不在背景執行任何任務。"
   ],
   "r2t": [
    "快捷键可以改",
@@ -461,11 +301,6 @@ window.ORBIT_DATA = {
    "Download Orbit",
    "下載 Orbit"
   ],
-  "dlLead": [
-   "不确定是哪种芯片，就打开「苹果菜单 › 关于本机」，看「芯片」或「处理器」一栏。打开 DMG，把 Orbit 拖进「应用程序」文件夹，再从那里打开。",
-   "Not sure which chip you have? Open Apple menu › About This Mac and look at Chip or Processor. Open the DMG, drag Orbit into Applications, and launch it from there.",
-   "不確定是哪種晶片，就開啟「蘋果選單 › 關於本機」，看「晶片」或「處理器」一欄。開啟 DMG，把 Orbit 拖進「應用程式」資料夾，再從那裡開啟。"
-  ],
   "verPrefix2": [
    "最新版本",
    "Latest version",
@@ -581,10 +416,485 @@ window.ORBIT_DATA = {
    "In an Orbit window, ⌘W and ⌘Q only close that window. To quit, click the menu bar icon and choose Quit Orbit.",
    "在 Orbit 的窗口裡按 ⌘W 或 ⌘Q 只會關閉目前視窗。要退出，請點選單列圖示，選「退出 Orbit」。"
   ],
-  "credits": [
-   "部分实现移植或参考了这些开源项目：",
-   "Parts of Orbit are ported from or inspired by these open-source projects:",
-   "部分實現移植或參考了這些開源項目："
+  "h.title": [
+   "常驻菜单栏的<br>Mac 工具箱",
+   "The Mac toolbox<br>in your menu bar",
+   "常駐選單列的<br>Mac 工具箱"
+  ],
+  "h.lead": [
+   "启动器、窗口管理、剪贴板历史、截图录屏、应用卸载、垃圾清理……平时要分别装的十几款工具，Orbit 放进了一个菜单栏图标。17 个模块，每个都能单独关掉，关掉的就不占资源。",
+   "A launcher, window manager, clipboard history, screenshots and recording, an uninstaller, a cleaner… the dozen-odd tools you’d normally install one by one, behind a single menu bar icon. 17 modules, each one can be switched off, and a module that’s off uses nothing.",
+   "啟動器、視窗管理、剪貼簿歷史、截圖錄屏、應用解除安裝、垃圾清理……平時要分別裝的十幾款工具，Orbit 放進了一個選單列圖示。17 個模組，每個都能單獨關掉，關掉的就不佔資源。"
+  ],
+  "h.ver": [
+   "版本",
+   "Version",
+   "版本"
+  ],
+  "h.req": [
+   "。需要 macOS 13 或更高，安装包已通过 Apple 公证。",
+   ". Requires macOS 13 or later, notarized by Apple.",
+   "。需要 macOS 13 或更高，安裝包已通過 Apple 公證。"
+  ],
+  "h.try.d": [
+   "右边是一台模拟的桌面。直接按键盘上的快捷键，或者点下面的按钮：",
+   "On the right is a mock desktop. Press the shortcuts on your keyboard, or click a button below:",
+   "右邊是一臺模擬的桌面。直接按鍵盤上的快速鍵，或者點下面的按鈕："
+  ],
+  "h.try.m": [
+   "下面是一台模拟的桌面，点按钮试试：",
+   "Below is a mock desktop. Tap a button to try it:",
+   "下面是一臺模擬的桌面，點按鈕試試："
+  ],
+  "h.k.launcher": [
+   "启动器",
+   "Launcher",
+   "啟動器"
+  ],
+  "h.k.left": [
+   "左半屏",
+   "Left half",
+   "左半屏"
+  ],
+  "h.k.right": [
+   "右半屏",
+   "Right half",
+   "右半屏"
+  ],
+  "h.k.max": [
+   "最大化",
+   "Maximize",
+   "最大化"
+  ],
+  "h.k.clip": [
+   "剪贴板",
+   "Clipboard",
+   "剪貼簿"
+  ],
+  "h.similar": [
+   "同类软件",
+   "Similar apps:",
+   "同類軟體"
+  ],
+  "h.replay": [
+   "再演一遍",
+   "Play again",
+   "再演一遍"
+  ],
+  "h.c1.aria": [
+   "快捷键 Option 加空格",
+   "Shortcut: Option Space",
+   "快速鍵 Option 加空格"
+  ],
+  "h.c1.type": [
+   "wx",
+   "mes",
+   "wx"
+  ],
+  "h.c1.t": [
+   "输入「wx」，微信就打开了",
+   "Type “mes”, and Messages opens",
+   "輸入「wx」，微信就打開了"
+  ],
+  "h.c1.d": [
+   "在任何 App 里按 ⌥Space 呼出搜索框。应用名认拼音全拼和首字母，回车打开；也能直接算数、搜网页和文件，手不用离开键盘，也不用切走当前窗口。",
+   "Press ⌥Space in any app to bring up the search box. Type a few letters of an app’s name and press Return to open it. It also does sums and searches the web and your files, so your hands stay on the keyboard and you never leave the window you’re in.",
+   "在任何 App 裡按 ⌥Space 撥出搜尋框。應用名認拼音全拼和首字母，回車開啟；也能直接算數、搜網頁和檔案，手不用離開鍵盤，也不用切走目前視窗。"
+  ],
+  "h.c2.aria": [
+   "快捷键 Control Option 左方向键",
+   "Shortcut: Control Option Left Arrow",
+   "快速鍵 Control Option 左方向鍵"
+  ],
+  "h.c2.t": [
+   "窗口一键吸到半屏",
+   "Snap a window to half the screen",
+   "視窗一鍵吸到半屏"
+  ],
+  "h.c2.d": [
+   "点一下要整理的窗口，按 ⌃⌥← 或 ⌃⌥→ 放到左半屏或右半屏，⌃⌥↩ 最大化。连续按同一个键，会在二分之一、三分之一、三分之二之间循环。一共 26 个动作，拖到屏幕边缘也能吸附。",
+   "Click the window you want to arrange and press ⌃⌥← or ⌃⌥→ to put it on the left or right half; ⌃⌥↩ maximizes it. Press the same key again to cycle through halves, thirds and two-thirds. There are 26 actions in all, and dragging a window to a screen edge snaps it too.",
+   "點一下要整理的視窗，按 ⌃⌥← 或 ⌃⌥→ 放到左半屏或右半屏，⌃⌥↩ 最大化。連續按同一個鍵，會在二分之一、三分之一、三分之二之間迴圈。一共 26 個動作，拖到螢幕邊緣也能吸附。"
+  ],
+  "h.c3.aria": [
+   "快捷键 Shift Command V",
+   "Shortcut: Shift Command V",
+   "快速鍵 Shift Command V"
+  ],
+  "h.c3.t": [
+   "复制过的，都还在",
+   "Everything you copied is still there",
+   "複製過的，都還在"
+  ],
+  "h.c3.d": [
+   "照常复制就行，Orbit 在后台记下文本、图片、文件、链接和颜色。按 ⇧⌘V，历史面板从屏幕底部升起；打字搜索，回车直接粘贴到当前 App。",
+   "Copy as usual and Orbit keeps track of text, images, files, links and colors. Press ⇧⌘V and the history slides up from the bottom of the screen; type to search, then press Return to paste straight into the current app.",
+   "照常複製就行，Orbit 在背景記下文字、圖片、檔案、連結和顏色。按 ⇧⌘V，歷史面板從螢幕底部升起；打字搜尋，回車直接貼上到目前 App。"
+  ],
+  "h.c4.aria": [
+   "快捷键 Control Shift A",
+   "Shortcut: Control Shift A",
+   "快速鍵 Control Shift A"
+  ],
+  "h.c4.t": [
+   "框选、标注、拷贝，当场做完",
+   "Select, mark up, copy, all in place",
+   "框選、標註、複製，當場做完"
+  ],
+  "h.c4.d": [
+   "按 ⌃⇧A 框选区域，工具条里有箭头、画笔、文字、马赛克、模糊和序号。做完拷贝或保存，也可以贴在桌面上当参考；按 ⌃⇧O 框选，还能直接识别文字。",
+   "Press ⌃⇧A and select an area. The toolbar has arrows, a pen, text, mosaic, blur and numbered markers. Copy or save when you’re done, or pin the shot to your desktop for reference. Press ⌃⇧O instead to select an area and recognize its text.",
+   "按 ⌃⇧A 框選區域，工具條裡有箭頭、畫筆、文字、馬賽克、模糊和序號。做完複製或儲存，也可以貼在桌面上當參考；按 ⌃⇧O 框選，還能直接識別文字。"
+  ],
+  "h.c5.aria": [
+   "按住 Command 拖动图标",
+   "Hold Command and drag an icon",
+   "按住 Command 拖動圖示"
+  ],
+  "h.c5.drag": [
+   "按住拖动",
+   "hold & drag",
+   "按住拖動"
+  ],
+  "h.c5.t": [
+   "菜单栏只留常用的",
+   "Keep only what you use in the menu bar",
+   "選單列只留常用的"
+  ],
+  "h.c5.d": [
+   "按住 ⌘，把不常用的图标拖到分隔线左边，它们就收起来了，点一下展开按钮再出来。被刘海遮住的图标，在「隐藏项目面板」里点一下就能用。",
+   "Hold ⌘ and drag the icons you rarely use to the left of the divider, and they collapse out of sight; one click on the arrow brings them back. Icons hidden behind the notch are a click away in the Hidden Items panel.",
+   "按住 ⌘，把不常用的圖示拖到分隔線左邊，它們就收起來了，點一下展開按鈕再出來。被劉海遮住的圖示，在「隱藏項目面板」裡點一下就能用。"
+  ],
+  "h.c6.aria": [
+   "在启动器里输入 ljql",
+   "Type “clea” in the launcher",
+   "在啟動器裡輸入 ljql"
+  ],
+  "h.c6.type": [
+   "ljql",
+   "clea",
+   "ljql"
+  ],
+  "h.c6.t": [
+   "先扫描，再决定删什么",
+   "Scan first, then decide what goes",
+   "先掃描，再決定刪什麼"
+  ],
+  "h.c6.d": [
+   "在启动器里输入「ljql」（垃圾清理的拼音首字母）打开它，点扫描。120 条规则覆盖缓存、日志、Xcode 等开发工具和旧安装包，结果按风险分级、给出推荐勾选；缓存直接删除，你自己的文件移到废纸篓。",
+   "Type “clea” in the launcher to open the Cleaner, then click Scan. 120 rules cover caches, logs, Xcode and other developer tools, and old installers. Results are grouped by risk with recommended picks; caches are deleted outright, while your own files go to the Trash.",
+   "在啟動器裡輸入「ljql」（垃圾清理的拼音首字母）開啟它，點掃描。120 條規則覆蓋快取、日誌、Xcode 等開發工具和舊安裝包，結果按風險分級、給出推薦勾選；快取直接刪除，你自己的檔案移到垃圾桶。"
+  ],
+  "h.c6.note": [
+   "桌面里的「可释放 14.1 GB」是演示数据，不是在哪台 Mac 上测出来的数字。",
+   "The “14.1 GB can be freed” on the desktop is demo data, not a measurement from a real Mac.",
+   "桌面裡的「可釋放 14.1 GB」是演示資料，不是在哪臺 Mac 上測出來的數字。"
+  ],
+  "h.m.aria": [
+   "模拟的 Mac 桌面，随页面滚动演示 Orbit 的各个功能",
+   "A mock Mac desktop that demonstrates Orbit’s features as you scroll",
+   "模擬的 Mac 桌面，隨頁面滾動演示 Orbit 的各個功能"
+  ],
+  "h.m.file": [
+   "文件",
+   "File",
+   "檔案"
+  ],
+  "h.m.edit": [
+   "编辑",
+   "Edit",
+   "編輯"
+  ],
+  "h.m.view": [
+   "显示",
+   "View",
+   "顯示"
+  ],
+  "h.m.window": [
+   "窗口",
+   "Window",
+   "視窗"
+  ],
+  "h.m.help": [
+   "帮助",
+   "Help",
+   "幫助"
+  ],
+  "h.m.clock": [
+   "周日 18:40",
+   "Sun 6:40 PM",
+   "週日 18:40"
+  ],
+  "h.m.time": [
+   "18:40",
+   "6:40",
+   "18:40"
+  ],
+  "h.m.preview": [
+   "预览",
+   "Preview",
+   "預覽"
+  ],
+  "h.m.design": [
+   "设计稿.png",
+   "Design.png",
+   "設計稿.png"
+  ],
+  "h.m.chartT": [
+   "三季度访问量",
+   "Q3 visits",
+   "三季度訪問量"
+  ],
+  "h.m.chartS": [
+   "按周汇总，单位：千次（示意）",
+   "Weekly, in thousands (illustrative)",
+   "按周彙總，單位：千次（示意）"
+  ],
+  "h.m.chat": [
+   "微信",
+   "Messages",
+   "微信"
+  ],
+  "h.m.search": [
+   "搜索",
+   "Search",
+   "搜尋"
+  ],
+  "h.m.team": [
+   "产品组",
+   "Product team",
+   "產品組"
+  ],
+  "h.m.msg1": [
+   "评审定在哪天？",
+   "When’s the review?",
+   "評審定在哪天？"
+  ],
+  "h.m.msg2": [
+   "我把时间发群里",
+   "I’ll post the time here",
+   "我把時間發群裡"
+  ],
+  "h.m.settings": [
+   "设置",
+   "Settings",
+   "設定"
+  ],
+  "h.m.shortcuts": [
+   "快捷键",
+   "Shortcuts",
+   "快速鍵"
+  ],
+  "h.m.perms": [
+   "权限",
+   "Permissions",
+   "權限"
+  ],
+  "h.m.history": [
+   "操作记录",
+   "History",
+   "操作記錄"
+  ],
+  "h.m.scan": [
+   "扫描",
+   "Scan",
+   "掃描"
+  ],
+  "h.m.rescan": [
+   "重新扫描",
+   "Scan again",
+   "重新掃描"
+  ],
+  "h.m.empty": [
+   "点击“扫描”查找可以安全清理的文件。",
+   "Click Scan to find files that are safe to remove.",
+   "點選「掃描」查詢可以安全清理的檔案。"
+  ],
+  "h.m.notScanned": [
+   "还没有扫描",
+   "Not scanned yet",
+   "還沒有掃描"
+  ],
+  "h.m.demo": [
+   "演示数据",
+   "Demo data",
+   "演示資料"
+  ],
+  "h.m.recommend": [
+   "推荐选择",
+   "Recommended",
+   "推薦選擇"
+  ],
+  "h.m.command": [
+   "命令",
+   "Command",
+   "命令"
+  ],
+  "h.m.copyHint": [
+   "回车拷贝",
+   "↩ to copy",
+   "回車複製"
+  ],
+  "h.m.web": [
+   "在 Google 中搜索“{0}”",
+   "Search Google for “{0}”",
+   "在 Google 中搜索「{0}」"
+  ],
+  "h.m.tryHint": [
+   "试试输入 wx、ljql，或者 2*(3+4)",
+   "Try “mes”, “clea” or 2*(3+4)",
+   "試試輸入 wx、ljql，或者 2*(3+4)"
+  ],
+  "h.m.all": [
+   "全部",
+   "All",
+   "全部"
+  ],
+  "h.m.lens": [
+   "菜单栏（放大）",
+   "Menu bar (zoomed in)",
+   "選單列（放大）"
+  ],
+  "h.m.lensLeft": [
+   "分隔线左边有 3 个图标",
+   "3 icons left of the divider",
+   "分隔線左邊有 3 個圖示"
+  ],
+  "h.m.drag": [
+   "拖动",
+   "Drag",
+   "拖動"
+  ],
+  "h.m.hint": [
+   "按 <b>⌥Space</b> 试试，或者 <b>⌃⌥←</b>",
+   "Try <b>⌥Space</b>, or <b>⌃⌥←</b>",
+   "按 <b>⌥Space</b> 試試，或者 <b>⌃⌥←</b>"
+  ],
+  "h.m.opened": [
+   "已打开 {0}",
+   "Opened {0}",
+   "已開啟 {0}"
+  ],
+  "h.m.copied": [
+   "已拷贝 {0}",
+   "Copied {0}",
+   "已複製 {0}"
+  ],
+  "h.m.pasted": [
+   "已粘贴",
+   "Pasted",
+   "已貼上"
+  ],
+  "h.m.pastedItem": [
+   "已粘贴 {0}",
+   "Pasted {0}",
+   "已貼上 {0}"
+  ],
+  "h.m.pastedImage": [
+   "已粘贴图片",
+   "Pasted the image",
+   "已貼上圖片"
+  ],
+  "h.m.pinned": [
+   "已贴到桌面",
+   "Pinned to the desktop",
+   "已貼到桌面"
+  ],
+  "h.mods.t": [
+   "17 个模块，分成四组",
+   "17 modules in four groups",
+   "17 個模組，分成四組"
+  ],
+  "h.mods.d": [
+   "每个模块单独启停，停用的不注册快捷键，也不在后台运行。所有快捷键都能在控制中心的「快捷键」页修改。",
+   "Each module is switched on or off on its own; a module that’s off registers no shortcuts and runs nothing in the background. Every shortcut can be changed on the Shortcuts page in Control Center.",
+   "每個模組單獨啟停，停用的不註冊快速鍵，也不在背景執行。所有快速鍵都能在控制中心的「快速鍵」頁修改。"
+  ],
+  "h.mods.link": [
+   "逐个模块的使用教程",
+   "Module-by-module tutorial",
+   "逐個模組的使用教程"
+  ],
+  "h.count": [
+   "{0} 个",
+   "{0}",
+   "{0} 個"
+  ],
+  "h.shots.d": [
+   "Orbit 没有主窗口。点菜单栏图标选「控制中心…」，或者按 ⌘,：左边按效率、截图与录制、文件、系统四组排列模块，右边是它的设置，顶部的开关随时启停。下面是真实截图，简体中文界面。",
+   "Orbit has no main window. Click the menu bar icon and choose Control Center…, or press ⌘,. Modules are listed on the left in four groups (Productivity, Capture, Files and System), with their settings on the right and an on/off switch at the top. These are real screenshots of the Simplified Chinese interface.",
+   "Orbit 沒有主視窗。點選單列圖示選「控制中心…」，或者按 ⌘,：左邊按效率、截圖與錄製、檔案、系統四組排列模組，右邊是它的設定，頂部的開關隨時啟停。下面是真實截圖，簡體中文介面。"
+  ],
+  "h.sw.try": [
+   "停用的模块不注册快捷键，也不在后台运行任何任务。拨一下开关看看：",
+   "A module that’s off registers no shortcuts and runs nothing in the background. Flip the switch:",
+   "停用的模組不註冊快速鍵，也不在背景執行任何任務。撥一下開關看看："
+  ],
+  "h.sw.aria": [
+   "启用启动器",
+   "Enable the launcher",
+   "啟用啟動器"
+  ],
+  "h.sw.on": [
+   "<span class=\"k\">已启用</span>：全局快捷键 ⌥Space 已注册，按下就能呼出启动器。",
+   "<span class=\"k\">On</span>: the global shortcut ⌥Space is registered and brings up the launcher.",
+   "<span class=\"k\">已啟用</span>：全域性快速鍵 ⌥Space 已註冊，按下就能撥出啟動器。"
+  ],
+  "h.sw.off": [
+   "<span class=\"k off-c\">已停用</span>：⌥Space 不再注册，留给别的 App 用；后台也不运行任何任务。",
+   "<span class=\"k off-c\">Off</span>: ⌥Space is released for other apps, and nothing runs in the background.",
+   "<span class=\"k off-c\">已停用</span>：⌥Space 不再註冊，留給別的 App 用；背景也不執行任何任務。"
+  ],
+  "h.dl.go": [
+   "下载",
+   "Download",
+   "下載"
+  ],
+  "h.dl.f1t": [
+   "不确定是哪种芯片",
+   "Not sure which chip you have?",
+   "不確定是哪種晶片"
+  ],
+  "h.dl.f1d": [
+   "打开「苹果菜单 › 关于本机」，看「芯片」或「处理器」一栏。",
+   "Open Apple menu › About This Mac and look at Chip or Processor.",
+   "開啟「蘋果選單 › 關於本機」，看「晶片」或「處理器」一欄。"
+  ],
+  "h.dl.f2t": [
+   "安装",
+   "Installing",
+   "安裝"
+  ],
+  "h.dl.f2d": [
+   "打开 DMG，把 Orbit 拖进「应用程序」文件夹，再从那里打开。需要 macOS 13 或更高。",
+   "Open the DMG, drag Orbit into Applications and launch it from there. Requires macOS 13 or later.",
+   "開啟 DMG，把 Orbit 拖進「應用程式」資料夾，再從那裡開啟。需要 macOS 13 或更高。"
+  ],
+  "h.dl.f3t": [
+   "已公证，会自己更新",
+   "Notarized, and keeps itself up to date",
+   "已公證，會自己更新"
+  ],
+  "h.dl.f3d": [
+   "安装包通过 Apple 公证。Sparkle 每天检查一次，只下载与本机芯片匹配的版本。",
+   "The installer is notarized by Apple. Sparkle checks once a day and only downloads the build for your chip.",
+   "安裝包通過 Apple 公證。Sparkle 每天檢查一次，只下載與本機晶片匹配的版本。"
+  ],
+  "h.lite.exe": [
+   "下载安装程序",
+   "Download the installer",
+   "下載安裝程式"
+  ],
+  "h.lite.dmg": [
+   "下载 DMG",
+   "Download the DMG",
+   "下載 DMG"
+  ],
+  "h.copy": [
+   "Orbit 由 VanJay 制作。",
+   "Orbit is made by VanJay.",
+   "Orbit 由 VanJay 製作。"
   ],
   "tutTitle": [
    "Orbit 使用教程",
@@ -2257,88 +2567,38 @@ window.ORBIT_DATA = {
    "tip": null
   }
  ],
- "credits": [
-  [
-   "Rectangle",
-   "https://github.com/rxhanson/Rectangle",
-   "Rectangle"
-  ],
-  [
-   "Maccy",
-   "https://github.com/p0deje/Maccy",
-   "Maccy"
-  ],
-  [
-   "OpenInTerminal",
-   "https://github.com/Ji4n1ng/OpenInTerminal",
-   "OpenInTerminal"
-  ],
-  [
-   "Hidden Bar",
-   "https://github.com/dwarvesf/hidden",
-   "Hidden Bar"
-  ],
-  [
-   "Ice",
-   "https://github.com/jordanbaird/Ice",
-   "Ice"
-  ],
-  [
-   "Thaw",
-   "https://github.com/thaw-app/Thaw",
-   "Thaw"
-  ],
-  [
-   "RClick",
-   "https://github.com/wflixu/RClick",
-   "RClick"
-  ],
-  [
-   "Pearcleaner",
-   "https://github.com/alienator88/Pearcleaner",
-   "Pearcleaner"
-  ],
-  [
-   "MangoDisk",
-   "https://github.com/harry0703/MangoDisk",
-   "MangoDisk"
-  ],
-  [
-   "Sparkle",
-   "https://github.com/sparkle-project/Sparkle",
-   "Sparkle"
-  ],
-  [
-   "SnapKit",
-   "https://github.com/SnapKit/SnapKit",
-   "SnapKit"
-  ],
-  [
-   "MMKV",
-   "https://github.com/Tencent/MMKV",
-   "MMKV"
-  ],
-  [
-   "GRDB",
-   "https://github.com/groue/GRDB.swift",
-   "GRDB"
-  ]
- ],
- "play": {
+ "home": {
   "apps": [
    {
+    "id": "chat",
     "name": [
      "微信",
-     "WeChat",
+     "Messages",
      "微信"
     ],
-    "keys": "weixin wx wechat",
+    "keys": "weixin wx wechat messages mes xinxi",
     "c": [
-     "#4cd964",
-     "#2bb24c"
-    ]
+     "#4CD964",
+     "#2BB24C"
+    ],
+    "kind": "app"
    },
    {
+    "id": "wxdev",
+    "name": [
+     "微信开发者工具",
+     "WeChat DevTools",
+     "微信開發者工具"
+    ],
+    "keys": "weixinkaifazhegongju wxkfzgj wechatdevtools",
+    "c": [
+     "#3DBB6A",
+     "#1E8F49"
+    ],
+    "kind": "app"
+   },
+   {
+    "id": "safari",
     "name": [
      "Safari",
      "Safari",
@@ -2346,11 +2606,13 @@ window.ORBIT_DATA = {
     ],
     "keys": "safari saf liulanqi",
     "c": [
-     "#5ac8fa",
-     "#0a84ff"
-    ]
+     "#5AC8FA",
+     "#0A84FF"
+    ],
+    "kind": "app"
    },
    {
+    "id": "notes",
     "name": [
      "备忘录",
      "Notes",
@@ -2358,11 +2620,13 @@ window.ORBIT_DATA = {
     ],
     "keys": "beiwanglu bwl notes",
     "c": [
-     "#ffd60a",
-     "#ff9f0a"
-    ]
+     "#FFD60A",
+     "#FF9F0A"
+    ],
+    "kind": "app"
    },
    {
+    "id": "terminal",
     "name": [
      "终端",
      "Terminal",
@@ -2370,11 +2634,13 @@ window.ORBIT_DATA = {
     ],
     "keys": "zhongduan zd terminal",
     "c": [
-     "#48484a",
-     "#1c1c1e"
-    ]
+     "#48484A",
+     "#1C1C1E"
+    ],
+    "kind": "app"
    },
    {
+    "id": "settings",
     "name": [
      "系统设置",
      "System Settings",
@@ -2382,35 +2648,13 @@ window.ORBIT_DATA = {
     ],
     "keys": "xitongshezhi xtsz settings",
     "c": [
-     "#aeaeb2",
+     "#AEAEB2",
      "#636366"
-    ]
-   },
-   {
-    "name": [
-     "照片",
-     "Photos",
-     "照片"
     ],
-    "keys": "zhaopian zp photos",
-    "c": [
-     "#ff6482",
-     "#bf5af2"
-    ]
+    "kind": "app"
    },
    {
-    "name": [
-     "音乐",
-     "Music",
-     "音樂"
-    ],
-    "keys": "yinyue yy music",
-    "c": [
-     "#ff6482",
-     "#ff375f"
-    ]
-   },
-   {
+    "id": "finder",
     "name": [
      "访达",
      "Finder",
@@ -2418,32 +2662,89 @@ window.ORBIT_DATA = {
     ],
     "keys": "fangda fd finder",
     "c": [
-     "#64d2ff",
-     "#0a84ff"
-    ]
+     "#64D2FF",
+     "#0A84FF"
+    ],
+    "kind": "app"
+   },
+   {
+    "id": "cleaner",
+    "name": [
+     "垃圾清理",
+     "Cleaner",
+     "垃圾清理"
+    ],
+    "keys": "ljql laji qingli cleaner clean junk",
+    "c": [
+     "#5BD0E0",
+     "#1FA2B8"
+    ],
+    "kind": "command",
+    "spark": true
+   },
+   {
+    "id": "trash",
+    "name": [
+     "清空废纸篓",
+     "Empty Trash",
+     "清空垃圾桶"
+    ],
+    "keys": "qkfzl feizhilou qingkong emptytrash trash",
+    "c": [
+     "#8E8E93",
+     "#5A5A60"
+    ],
+    "kind": "command"
    }
   ],
   "clips": [
-   [
-    "下周三 14:00 评审",
-    "Review Wed 2 PM",
-    "下週三 14:00 評審"
-   ],
-   [
-    "orbit.app/docs",
-    "orbit.app/docs",
-    "orbit.app/docs"
-   ],
-   [
-    "#4F7CFF",
-    "#4F7CFF",
-    "#4F7CFF"
-   ],
-   [
-    "会议室 B-302",
-    "Room B-302",
-    "會議室 B-302"
-   ]
+   {
+    "type": "d.clipboard.k1",
+    "c": "#FFB547",
+    "body": [
+     "下周三 14:00 评审",
+     "Review Wed 2 PM",
+     "下週三 14:00 評審"
+    ]
+   },
+   {
+    "type": "d.clipboard.k2",
+    "c": "#5AC8FA",
+    "body": [
+     "orbit.app/docs",
+     "orbit.app/docs",
+     "orbit.app/docs"
+    ]
+   },
+   {
+    "type": "d.clipboard.k3",
+    "c": "#7C74FF",
+    "body": [
+     "#4F7CFF",
+     "#4F7CFF",
+     "#4F7CFF"
+    ],
+    "swatch": true
+   },
+   {
+    "type": "d.clipboard.k4",
+    "c": "#EC4899",
+    "body": [
+     "截图.png",
+     "Screenshot.png",
+     "截圖.png"
+    ],
+    "image": true
+   },
+   {
+    "type": "d.clipboard.k1",
+    "c": "#FFB547",
+    "body": [
+     "会议室 B-302",
+     "Room B-302",
+     "會議室 B-302"
+    ]
+   }
   ]
  }
 };

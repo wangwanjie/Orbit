@@ -104,12 +104,4 @@ Orbit 为 Apple 芯片和 Intel 芯片分别提供安装包，需要 **macOS 13.
 
 遇到问题或有功能建议，欢迎在 [Issues](https://github.com/wangwanjie/Orbit/issues) 中反馈。本仓库只用于发布安装包与更新信息，不包含源代码。
 
-## 致谢
-
-Orbit 的部分实现移植或参考了以下开源项目，在此致谢：
-
-- 移植代码（MIT 许可）：[Rectangle](https://github.com/rxhanson/Rectangle)、[Maccy](https://github.com/p0deje/Maccy)、[OpenInTerminal](https://github.com/Ji4n1ng/OpenInTerminal)、[Hidden Bar](https://github.com/dwarvesf/hidden)
-- 参考思路：[Ice](https://github.com/jordanbaird/Ice)、[Thaw](https://github.com/thaw-app/Thaw)、[RClick](https://github.com/wflixu/RClick)、[Pearcleaner](https://github.com/alienator88/Pearcleaner)、[MangoDisk](https://github.com/harry0703/MangoDisk)
-- 使用的开源库：[Sparkle](https://github.com/sparkle-project/Sparkle)、[SnapKit](https://github.com/SnapKit/SnapKit)、[MMKV](https://github.com/Tencent/MMKV)、[GRDB](https://github.com/groue/GRDB.swift)
-
 Copyright © 2026 VanJay. All rights reserved.
