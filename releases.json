@@ -1,5 +1,23 @@
 [
   {
+    "version": "1.0.7",
+    "build": "8",
+    "pubDate": "Mon, 23 Nov 2026 08:06:25 GMT",
+    "notesHTML": "<h3>修复</h3>\n<ul>\n<li>录制 GIF / 视频时，打开着的 Orbit 窗口（控制中心等）会跳到前台，挡住要选择的录制区域</li>\n<li>文件查找以管理员权限搜索整个磁盘时偶发崩溃</li>\n</ul>",
+    "assets": {
+      "arm64": {
+        "name": "Orbit_v1.0.7_8_arm64.dmg",
+        "length": 8245995,
+        "signature": "QDt1wxEE9LrmtFaPXyWHUhbqwrrhvoNOmzy4tQZjTLzOC036aIZqcaAspiwMueaCgyxreHpHbfnF5AU2Q7d8BQ=="
+      },
+      "x86_64": {
+        "name": "Orbit_v1.0.7_8_x86_64.dmg",
+        "length": 8704198,
+        "signature": "+zmflUmrlvqTOW+CCpaXaaIcHpvQdqLXX8DSjQxXQvW2C4Lsd2w+DUlryHMhJ4DRb9yBwUikMSDZ52BlXDhTAA=="
+      }
+    }
+  },
+  {
     "version": "1.0.6",
     "build": "7",
     "pubDate": "Thu, 19 Nov 2026 02:41:53 GMT",
